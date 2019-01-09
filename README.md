@@ -25,4 +25,8 @@ This app used the following technologies:
 * [Travis CI](https://travis-ci.org/)
 * [Trello](https://trello.com/b/adAfzpO1/ace)
 
+## Tech Issues
+These are the obstacles we faced:
+* Finding a data set with images
+
 
