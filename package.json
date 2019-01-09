@@ -1,0 +1,23 @@
+{
+  "name": "ace",
+  "version": "1.0.0",
+  "description": "DigitalCrafts Phase 2 Project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zenerika/ace.git"
+  },
+  "author": "Erika Aguirre, Chiza Barber, Addison Verger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zenerika/ace/issues"
+  },
+  "homepage": "https://github.com/Zenerika/ace#readme",
+  "dependencies": {
+    "express": "4.16.4"
+  }
+}
