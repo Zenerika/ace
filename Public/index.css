@@ -1,0 +1,16 @@
+.container-fluid {
+    display: flex;
+}
+
+.left-panel {
+    width: 20vw; 
+    height: 100vh;
+    border: solid pink;
+    text-align: center;
+}
+
+.body {
+    width: 80vw;
+    height: 100vh;
+    border: solid blue;
+}
