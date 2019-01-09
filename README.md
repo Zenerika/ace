@@ -16,6 +16,13 @@ Our team includes:
 * [Erika Aguirre](https://github.com/zenerika)
 
 ## Tech Used
-This app used the following technoloies:
+This app used the following technologies:
 * [Bootstrap](https://getbootstrap.com/)
+* [PostgresQL](https://www.postgresql.org/)
+* [Knex.js](https://knexjs.org/)
+* [Sequelize](http://docs.sequelizejs.com/)
+* [Passport.js](http://www.passportjs.org/)
+* [Travis CI](https://travis-ci.org/)
+* [Trello](https://trello.com/b/adAfzpO1/ace)
+
 
