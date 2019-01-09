@@ -1,4 +1,4 @@
-# Ace Pet Store
+# Ace Adoption
 This is the final project for "Phase 2" of the Flex course for [DigitalCrafts](https://www.digitalcrafts.com/) Houston. It is focused on backend technologies using [Node.js](https://nodejs.org/).
 
 > Project Description
@@ -8,6 +8,7 @@ This is the final project for "Phase 2" of the Flex course for [DigitalCrafts](h
 
 > You will need some HTML + CSS in order for the application to work, but it is ok to keep this part simple (hint: use a CSS > framework). Focus on thoroughness of the implementation using backend technologies like GET and POST requests, database schema > and queries, user authentication, form submission and validation, HTML templates, etc.
 
+__Ace Adoption__ is a web application where users can login, find a new best friend and adopt them in a few easy steps.  
 
 ## Collaborators
 Our team includes:
