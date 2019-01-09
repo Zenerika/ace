@@ -9,13 +9,13 @@ You will not be designing something "new" for this project. Pick something that 
 You will need some HTML + CSS in order for the application to work, but it is ok to keep this part simple (hint: use a CSS framework). Focus on thoroughness of the implementation using backend technologies like GET and POST requests, database schema and queries, user authentication, form submission and validation, HTML templates, etc.
 
 
-Collaborators
+## Collaborators
 Our team includes:
 * [Addison Verger](https://github.com/addisonverger)
 * [Chiza Barber](https://github.com/schizaetrix)
 * [Erika Aguirre](https://github.com/zenerika)
 
-Tech Used
+## Tech Used
 This app used the following technoloies:
 * [Bootstrap](https://getbootstrap.com/)
 
