@@ -1,16 +1,25 @@
+
+
 .container-fluid {
     display: flex;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .left-panel {
     width: 20vw; 
     height: 100vh;
-    border: solid pink;
+    /* border: solid pink; */
     text-align: center;
+    background-color: #F7F8F9;
+    padding-top: 50px;
 }
 
 .body {
     width: 80vw;
     height: 100vh;
-    border: solid blue;
+    /* border: solid blue; */
 }
