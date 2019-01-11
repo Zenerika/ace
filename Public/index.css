@@ -23,3 +23,7 @@
     height: 100vh;
     /* border: solid blue; */
 }
+
+#dog-name {
+    text-align: center;
+}
