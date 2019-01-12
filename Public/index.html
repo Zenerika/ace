@@ -13,7 +13,10 @@
 
 <body>
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand">Ace Adoption</a>
+        <a href="./index.html" class="navbar-brand">Ace Adoption</a>
+        <a href="./login.html">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Login</button>
+        </a>
         <!-- <form class="form-inline">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -23,15 +26,11 @@
     <div class="container-fluid">
         <div class="left-panel">
             <div class="categories">
+              <form action="">
+                <p class="h5">Search By:</p>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">BREED</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                    <input class="form-control" type="text" value="" id="breedInput">
                 </div>
                 <hr>
                 <p>GENDER</p>
@@ -79,6 +78,7 @@
                             <option>Senior</option>
                         </select>
                     </div>
+                  </form>
             </div>
         </div>
         <div class="body">
@@ -102,5 +102,7 @@
         </div>
     </div>
 </body>
+
+<script src="app.js"></script>
 
 </html>
