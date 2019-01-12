@@ -19,18 +19,24 @@
   "homepage": "https://github.com/Zenerika/ace#readme",
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "express": "4.16.4",
     "fs-plus": "^3.1.1",
     "knex": "^0.16.3",
     "pg": "^7.7.1",
     "sqlite3": "^4.0.4"
 =======
+=======
+>>>>>>> 2dc1497355238295e6ee3d7217954e2995455e3c
     "autocomplete.js": "^0.35.0",
     "express": "4.16.4",
     "express-validator": "^5.3.1",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0"
+<<<<<<< HEAD
 >>>>>>> updates to website form
+=======
+>>>>>>> 2dc1497355238295e6ee3d7217954e2995455e3c
   }
 }
