@@ -19,9 +19,13 @@
   "homepage": "https://github.com/Zenerika/ace#readme",
   "dependencies": {
     "express": "4.16.4",
-    "fs-plus": "^3.1.1",
-    "knex": "^0.16.3",
-    "pg": "^7.7.1",
-    "sqlite3": "^4.0.4"
+    "fs-plus": "3.1.1",
+    "knex": "0.16.3",
+    "pg": "7.7.1",
+    "sqlite3": "4.0.4",
+    "sequelize": "4.42.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "5.4.0"
   }
 }
