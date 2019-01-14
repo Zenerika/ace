@@ -1,4 +1,7 @@
 # Ace Adoption
+
+[![Build Status](https://travis-ci.com/ace-adoption/ace.svg?branch=master)](https://travis-ci.com/ace-adoption/ace)
+
 This is the final project for "Phase 2" of the Flex course for [DigitalCrafts](https://www.digitalcrafts.com/) Houston. It is focused on backend technologies using [Node.js](https://nodejs.org/).
 
 > Project Description
