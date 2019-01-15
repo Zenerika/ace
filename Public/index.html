@@ -13,48 +13,49 @@
 
 <body>
     <nav class="navbar navbar-light bg-light">
-        <a href="./index.html" class="navbar-brand">Ace Adoption</a>
+        <a href="./index.html" class="navbar-brand"><h2>Ace Adoption</h2></a>
         <a href="./login.html">
-          <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Login</button>
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Login</button>
         </a>
         <!-- <form class="form-inline">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form> -->
     </nav>
-
+    <!-- start of the left panel -->
     <div class="container-fluid">
         <div class="left-panel">
             <div class="categories">
-              <form action="">
-                <p class="h5">Search By:</p>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">BREED</label>
-                    <input class="form-control" type="text" value="" id="breedInput">
-                </div>
-                <hr>
-                <p>GENDER</p>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">Female</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">Male</label>
-                </div>
-                <hr>
-                <div class="form-group">
+                <form action="">
+                    <p class="h5">Search By:</p>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">BREED</label>
+                        <input class="form-control" type="text" value="" id="breedInput">
+                    </div>
+                    <hr>
+                    <p>GENDER</p>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">Male</label>
+                    </div>
+                    <hr>
+                    <div class="form-group">
                         <label for="exampleFormControlSelect1">PRICE</label>
                         <select class="form-control" id="exampleFormControlSelect1">
-                            <option><$100</option>
-                            <option>$100-$250</option>
+                            <option>
+                                <$100</option> <option>$100-$250
+                            </option>
                             <option>$250-$500</option>
                             <option>$500-$750</option>
                             <option>$750-$1,000</option>
                         </select>
                     </div>
-                <hr>
-                <div class="form-group">
+                    <hr>
+                    <div class="form-group">
                         <label for="exampleFormControlSelect1">CITY</label>
                         <select class="form-control" id="exampleFormControlSelect1">
                             <option>Houston</option>
@@ -69,8 +70,8 @@
                             <option>Lubbock</option>
                         </select>
                     </div>
-                <hr>
-                <div class="form-group">
+                    <hr>
+                    <div class="form-group">
                         <label for="exampleFormControlSelect1">AGE</label>
                         <select class="form-control" id="exampleFormControlSelect1">
                             <option>Puppy</option>
@@ -78,17 +79,21 @@
                             <option>Senior</option>
                         </select>
                     </div>
-                  </form>
+                </form>
             </div>
         </div>
+        <!-- end of left panel -->
+        <!-- dogs(body) -->
         <div class="body">
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div class="card" style="width: 18rem;">
-                            <img src="sample_dog.jpg" class="card-img-top">
-                            <div class="card-body">
-                                <h3 class="card-title" id="dog-name">Name</h3>
+                        <div class="card" id="card-id" style="width: 18rem;">
+                            <div class="card-body" id="card-body">
+                                <h4 class="card-title" id="dog-name">Jackson</h4>
+                                <div class="pic-container">
+                                    <img src="sample_dog.jpg" class="pic">
+                                </div>
                                 <div class="about-dog">
                                     <div class="gender">Male</div>
                                     <div class="age">Adult</div>
