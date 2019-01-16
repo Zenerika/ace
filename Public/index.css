@@ -1,5 +1,3 @@
-
-
 .container-fluid {
     display: flex;
     width: 100%;
@@ -26,4 +24,33 @@
 
 #dog-name {
     text-align: center;
+    margin: 10px;
 }
+
+.about-dog {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around; 
+    font-size: 20px;
+    margin: 10px 10px;
+    color: gray;
+}
+
+#adopt-me {
+    width: 100%;
+}
+
+.pic-container {
+    display: flex;
+    justify-content: center;
+}
+
+.pic {
+    width: 70%;
+    height: 70%;
+}
+
+#card-body {
+    padding: 0;
+}
+
