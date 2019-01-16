@@ -18,15 +18,17 @@
   },
   "homepage": "https://github.com/Zenerika/ace#readme",
   "dependencies": {
+    "autocomplete.js": "^0.35.0",
+    "body-parser": "^1.18.3",
+    "cookie-session": "^2.0.0-beta.3",
     "express": "4.16.4",
+    "express-validator": "^5.3.1",
     "fs-plus": "3.1.1",
     "knex": "0.16.3",
-    "pg": "^7.7.1",
-    "sqlite3": "^4.0.4",
-    "autocomplete.js": "^0.35.0",
-    "express-validator": "^5.3.1",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "pg": "^7.7.1",
+    "sqlite3": "^4.0.4"
   }
 }
