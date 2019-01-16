@@ -1,18 +1,29 @@
 /* Express */
 
 const express = require('express')
+const exphbs = require('express-handlebars') 
 const app = express()
 
 app.use(express.static('Public'))
 
+app.engine('handlebars', exphbs({defaultLayout: 'main'}))
+app.set('view engine', 'handlebars')
+
 app.get('/', function (req, res) {
-  res.sendFile('login.html', { root : __dirname })
+  // res.sendFile('login.html', { root : __dirname })
+  res.render('home', {
+    name: 'Jackson', 
+    img: 'sample_dog.jpg',
+    gender: 'F',
+    age: 'adult'
+  })
 })
 
 /* Express Validator */
 
 const { body,validationResult } = require('express-validator/check')
 const { sanitizeBody } = require('express-validator/filter')
+
 
 /* Passport Setup */
 
@@ -78,6 +89,9 @@ app.get('/auth/facebook/callback',
   function(req, res) {
     res.redirect('/success')
 })
+
+const api = require('./routes/routes.js')
+app.use('/api', api)
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('Listening on port 3000.')

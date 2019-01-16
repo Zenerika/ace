@@ -1,51 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
-    <title>Ace Adoption</title>
-</head>
-
-<body>
-    <nav class="navbar navbar-light bg-light">
-        <a href="./index.html" class="navbar-brand"><h2>Ace Adoption</h2></a>
-        <a href="./login.html">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Login</button>
-        </a>
-        <!-- <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form> -->
-    </nav>
-    <!-- start of the left panel -->
+<!-- start of the left panel -->
     <div class="container-fluid">
         <div class="left-panel">
             <div class="categories">
-                <form action="">
+                <form action="/api/dogs" method="GET"">
                     <p class="h5">Search By:</p>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">BREED</label>
-                        <input class="form-control" type="text" value="" id="breedInput">
+                        <input class="form-control" name="breed" type="text" id="breedInput">
                     </div>
                     <hr>
                     <p>GENDER</p>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <input class="form-check-input" type="checkbox" name="female" id="defaultCheck1">
                         <label class="form-check-label" for="defaultCheck1">Female</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <input class="form-check-input" type="checkbox" name="male" id="defaultCheck1">
                         <label class="form-check-label" for="defaultCheck1">Male</label>
                     </div>
                     <hr>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">PRICE</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
+                        <select class="form-control" id="exampleFormControlSelect1" name="price">
                             <option>
                                 <$100</option> <option>$100-$250
                             </option>
@@ -57,7 +33,7 @@
                     <hr>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">CITY</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
+                        <select class="form-control" id="exampleFormControlSelect1" name="city">
                             <option>Houston</option>
                             <option>San Antonio</option>
                             <option>Austin</option>
@@ -73,10 +49,10 @@
                     <hr>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">AGE</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Puppy</option>
-                            <option>Adult</option>
-                            <option>Senior</option>
+                        <select class="form-control" id="exampleFormControlSelect1" name="age">
+                            <option>puppy</option>
+                            <option>adult</option>
+                            <option>senior</option>
                         </select>
                     </div>
                 </form>
@@ -90,13 +66,13 @@
                     <div class="col">
                         <div class="card" id="card-id" style="width: 18rem;">
                             <div class="card-body" id="card-body">
-                                <h4 class="card-title" id="dog-name">Jackson</h4>
+                                <h4 class="card-title" id="dog-name">{{name}}</h4>
                                 <div class="pic-container">
-                                    <img src="sample_dog.jpg" class="pic">
+                                    <img src={{img}} class="pic">
                                 </div>
                                 <div class="about-dog">
-                                    <div class="gender">Male</div>
-                                    <div class="age">Adult</div>
+                                    <div class="gender">{{gender}}</div>
+                                    <div class="age">{{age}}</div>
                                 </div>
                                 <a href="#" class="btn btn-primary" id="adopt-me">Adopt Me</a>
                             </div>
@@ -106,8 +82,3 @@
             </div>
         </div>
     </div>
-</body>
-
-<script src="app.js"></script>
-
-</html>
