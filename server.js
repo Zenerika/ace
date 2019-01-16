@@ -1,20 +1,29 @@
 /* Express */
 
 const express = require('express')
-const knexLib = require('knex')
-const fs = require('fs-plus')
+const exphbs = require('express-handlebars') 
 const app = express()
 
 app.use(express.static('Public'))
 
+app.engine('handlebars', exphbs({defaultLayout: 'main'}))
+app.set('view engine', 'handlebars')
+
 app.get('/', function (req, res) {
-  res.sendFile('login.html', { root : __dirname })
+  // res.sendFile('login.html', { root : __dirname })
+  res.render('home', {
+    name: 'Jackson', 
+    img: 'sample_dog.jpg',
+    gender: 'F',
+    age: 'adult'
+  })
 })
 
 /* Express Validator */
 
 const { body,validationResult } = require('express-validator/check')
 const { sanitizeBody } = require('express-validator/filter')
+
 
 /* Passport Setup */
 
@@ -81,23 +90,9 @@ app.get('/auth/facebook/callback',
     res.redirect('/success')
 })
 
+const api = require('./routes/routes.js')
+app.use('/api', api)
+
 app.listen(process.env.PORT || 3000, () => {
     console.log('Listening on port 3000.')
 })
-
-
-// const defaultDbOptions = {
-//     client: 'sqlite3',
-//     connection: {
-//         filename : 'database.db'
-//     }
-// }
-
-// let dbOptions = defaultDbOptions
-// try {
-//     dbOptions = JSON.parse(fs.readFileSync('./config.json'))
-// } catch (e) {}
-
-// console.log('the dbOptions:', dbOptions)
-
-// var knex = knexLib(dbOptions)

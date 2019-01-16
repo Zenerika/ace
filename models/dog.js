@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     age: DataTypes.STRING,
     breed: DataTypes.STRING,
     image_url: DataTypes.STRING
-  }, {});
+  }, {
+    timestamps: false,
+    freezeTableName: true
+  });
   dog.associate = function(models) {
     // associations can be defined here
   };
