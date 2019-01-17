@@ -31,5 +31,7 @@ This app used the following technologies:
 ## Tech Issues
 These are the obstacles we faced:
 * Finding a data set with images
-
+* Lack of documentation using Passport
+* Working as a team and finding the middle-ground (back-end, front-end, OAuth)
+* Connecting all the pieces together (full-stack), but that's when we learned how to use Express Handlebars. 
 
