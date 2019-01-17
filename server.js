@@ -4,7 +4,7 @@ const express = require('express')
 const exphbs = require('express-handlebars') 
 const app = express()
 
-app.use(express.static('Public'))
+// app.use(express.static('Public'))
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
