@@ -1,8 +1,29 @@
+var users = [
+    {id: 1, username: 'bob', password: 'secret', email: 'bob@example.com'}
+    , {id: 2, username: 'scott', password: 'password', email: 'scott@example.com'}
+];
+
+/* Search Function */
+
+function findByEmail(email, callback) {
+    for (var i = 0, len = users.length; i < len; i++) {
+        var user = users[i];
+        if (user.email === email) {
+            // callback takes arguments (error,user)
+            return callback(null, user);
+        }
+    }
+    return callback(null, null);
+}
+
 /* Express */
 
 const express = require('express')
-const exphbs = require('express-handlebars') 
+const exphbs = require('express-handlebars')
+//const fs = require('fs-plus')
 const app = express()
+var bodyParser = require('body-parser')
+const cookieSession = require('cookie-session')
 
 app.use(express.static('Public'))
 
@@ -12,11 +33,19 @@ app.set('view engine', 'handlebars')
 app.get('/', function (req, res) {
   // res.sendFile('login.html', { root : __dirname })
   res.render('home', {
-    name: 'Jackson', 
+    name: 'Jackson',
     img: 'sample_dog.jpg',
     gender: 'F',
     age: 'adult'
   })
+})
+
+app.get('/login', function (req, res) {
+  res.render('login')
+})
+
+app.get('/signup', function (req, res) {
+  res.render('signup')
 })
 
 /* Express Validator */
@@ -24,6 +53,13 @@ app.get('/', function (req, res) {
 const { body,validationResult } = require('express-validator/check')
 const { sanitizeBody } = require('express-validator/filter')
 
+/* cookieSession config */
+
+app.use(cookieSession({
+    name: 'session',
+    maxAge: 24 * 60 * 60 * 1000, //one day in milliseconds
+    keys: ['randomstringhere']
+}))
 
 /* Passport Setup */
 
@@ -38,31 +74,49 @@ app.get('/error', function (req, res) {
   res.send("Error logging in")
 })
 
-passport.serializeUser(function (user, cb) {
-  cb(null, user.id)
+passport.serializeUser(function(user, cb) {
+  cb(null, user)
 })
-passport.deserializeUser(function (id, cb) {
-  db.users.findById(id, function (err, user) {
-    if (err) { return cb(err) }
-    cb(null, user)
-  })
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj)
 })
 
 /* Local Auth */
 
 // figure out db (database user id searching) //
 
-const Strategy = require('passport-local').Strategy
+const LocalStrategy = require('passport-local').Strategy
 
-passport.use(new Strategy(
-  function(username, password, cb) {
-    db.users.findByUsername(username, function(err, user) {
-      if (err) { return cb(err) }
-      if (!user) { return cb(null, false) }
-      if (user.password != password) { return cb(null, false) }
-      return cb(null, user)
-    })
-  }))
+passport.use(new LocalStrategy({
+        // this maps the file names in the html file to the passport stuff
+        usernameField: 'emailLogin',
+        passwordField: 'passwordLogin'
+    },
+    function (email, password, done) {
+        // replace this with our search function, mysql/monogo/service/etc
+        findByEmail(email, function (err, user) {
+            if (err) {
+                return done(err);
+            }
+            if (!user) {
+                console.log('bad email')
+                return done(null, false, {message: 'Incorrect email.'});
+            } else {
+                if (user.password === password) {
+                    console.log('good email and password');
+                    return done(null, user);
+                } else {
+                    console.log('good email and bad password');
+                    return done(null, false, {message: 'Incorrect password.'});
+                }
+            }
+
+        })
+    }
+))
+
+app.use(bodyParser.urlencoded({extended: false}))
 
 /* Facebook Auth */
 
@@ -80,6 +134,19 @@ function (accessToken, refreshToken, profile, cb) {
   return cb(null, profile)
 }
 ))
+
+/* HTTP Methods */
+
+app.post('/login', function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+        console.log(err, user, info);
+        if (user) {
+            res.send({user: user});
+        } else {
+            res.send({error: err, info: info});
+        }
+    })(req, res, next);
+});
 
 app.get('/auth/facebook',
   passport.authenticate('facebook'));
