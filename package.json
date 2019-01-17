@@ -2,33 +2,42 @@
   "name": "ace",
   "version": "1.0.0",
   "description": "DigitalCrafts Phase 2 Project",
+  "engines": {
+    "node": "8.12.0"
+  },
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "node tests/test.js",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zenerika/ace.git"
+    "url": "git+https://github.com/ace-adoption/ace.git"
   },
   "author": "Erika Aguirre, Chiza Barber, Addison Verger",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Zenerika/ace/issues"
+    "url": "https://github.com/ace-adoption/ace/issues"
   },
-  "homepage": "https://github.com/Zenerika/ace#readme",
+  "homepage": "https://github.com/ace-adoption/ace/#readme",
   "dependencies": {
     "autocomplete.js": "^0.35.0",
     "body-parser": "^1.18.3",
     "cookie-session": "^2.0.0-beta.3",
-    "express": "4.16.4",
-    "express-validator": "^5.3.1",
     "fs-plus": "3.1.1",
     "knex": "0.16.3",
+    "express": "4.16.4",
+    "express-handlebars": "^3.0.0",
+    "express-validator": "^5.3.1",
+    "nodemon": "^1.18.9",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "pg": "^7.7.1",
+    "sequelize": "4.42.0",
     "sqlite3": "^4.0.4"
+  },
+  "devDependencies": {
+    "sequelize-cli": "5.4.0"
   }
 }

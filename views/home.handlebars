@@ -1,0 +1,84 @@
+<!-- start of the left panel -->
+    <div class="container-fluid">
+        <div class="left-panel">
+            <div class="categories">
+                <form action="/api/dogs" method="GET"">
+                    <p class="h5">Search By:</p>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">BREED</label>
+                        <input class="form-control" name="breed" type="text" id="breedInput">
+                    </div>
+                    <hr>
+                    <p>GENDER</p>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="female" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="male" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">Male</label>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">PRICE</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="price">
+                            <option>
+                                <$100</option> <option>$100-$250
+                            </option>
+                            <option>$250-$500</option>
+                            <option>$500-$750</option>
+                            <option>$750-$1,000</option>
+                        </select>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">CITY</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="city">
+                            <option>Houston</option>
+                            <option>San Antonio</option>
+                            <option>Austin</option>
+                            <option>Dallas</option>
+                            <option>Fort Worth</option>
+                            <option>El Paso</option>
+                            <option>Amarillo</option>
+                            <option>Tyler</option>
+                            <option>Galveston</option>
+                            <option>Lubbock</option>
+                        </select>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">AGE</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="age">
+                            <option>puppy</option>
+                            <option>adult</option>
+                            <option>senior</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end of left panel -->
+        <!-- dogs(body) -->
+        <div class="body">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="card" id="card-id" style="width: 18rem;">
+                            <div class="card-body" id="card-body">
+                                <h4 class="card-title" id="dog-name">{{name}}</h4>
+                                <div class="pic-container">
+                                    <img src={{img}} class="pic">
+                                </div>
+                                <div class="about-dog">
+                                    <div class="gender">{{gender}}</div>
+                                    <div class="age">{{age}}</div>
+                                </div>
+                                <a href="#" class="btn btn-primary" id="adopt-me">Adopt Me</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
