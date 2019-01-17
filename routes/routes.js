@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-// const query = require('./queries/query.js')
+const query = require('./queries/query.js')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 
@@ -17,7 +17,7 @@ router.get('/dogs', (req,res) => {
     if ((req.query.male && req.query.female) || (!req.query.male && !req.query.female)) {
         gender ={
             [Op.or]: ["M", "F"]
-        } 
+        }
     }
     else if (req.query.male) {
         gender = "M"
@@ -90,10 +90,27 @@ router.get('/dogs', (req,res) => {
         })
 })
 
-// router.get('/users/:username', (req, res) => {
-//     console.log(req.params.username)
-//     console.log(req.query.name)
-// })
+router.get('/login', (req, res) => {
+   console.log(req.query)
+
+   db.User.findAll({
+        where: {
+          emailLogin: req.query.email,
+          passwordLogin: req.query.password
+        }
+   })
+        .then((users) => {
+            console.log('users', users.map((obj) => {return obj.dataValues}))
+        })
+        .catch((err) => {
+          console.log('Error', err)
+        })
+})
+
+router.get('/users/:username', (req, res) => {
+   console.log(req.params.username)
+   console.log(req.query.name)
+ })
 
 // method="/users/eli?name=max&birthday=october"
 module.exports = router

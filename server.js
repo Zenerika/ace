@@ -40,6 +40,14 @@ app.get('/', function (req, res) {
   })
 })
 
+app.get('/login', function (req, res) {
+  res.render('login')
+})
+
+app.get('/signup', function (req, res) {
+  res.render('signup')
+})
+
 /* Express Validator */
 
 const { body,validationResult } = require('express-validator/check')
@@ -82,8 +90,8 @@ const LocalStrategy = require('passport-local').Strategy
 
 passport.use(new LocalStrategy({
         // this maps the file names in the html file to the passport stuff
-        usernameField: 'email',
-        passwordField: 'password'
+        usernameField: 'emailLogin',
+        passwordField: 'passwordLogin'
     },
     function (email, password, done) {
         // replace this with our search function, mysql/monogo/service/etc

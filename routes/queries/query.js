@@ -4,7 +4,7 @@ const db = require('../../models')
 // console.log(db.User.findAll())
 const filterDogs = (breed, gender, age, price, city) => {
 
-    return db.User.findAll({
+    return db.Dog.findAll({
         where: {
             breed: breed,
             gender: gender,
@@ -13,9 +13,21 @@ const filterDogs = (breed, gender, age, price, city) => {
             location: city
         }
     })
-        
+
+}
+
+const filterUsers = (emailLogin, passwordLogin) => {
+
+  return db.User.findAll({
+      where: {
+        email: emailLogin,
+        password: passwordLogin
+      }
+  })
+
 }
 
 module.exports = {
-    filterDogs: filterDogs
+    filterDogs: filterDogs,
+    filterUsers: filterUsers
 }

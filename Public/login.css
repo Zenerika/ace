@@ -1,8 +1,8 @@
-#signin{
+#signin, #signup {
     margin: auto;
-    padding: 10% 0;
+    padding-top: 5%;
     width: 50%;
-    height: 100vh;
+    height: 40vh;
 }
 
 #fbsubmit {
