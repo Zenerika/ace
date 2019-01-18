@@ -64,21 +64,21 @@
         <div class="body">
             <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <div class="card" id="card-id" style="width: 18rem;">
-                            <div class="card-body" id="card-body">
-                                <h4 class="card-title" id="dog-name">{{name}}</h4>
-                                <div class="pic-container">
-                                    <img src={{img}} class="pic">
+                        {{#each dogData}}
+                            <div class="card" id="card-id" style="width: 18rem;">
+                                <div class="card-body" id="card-body">
+                                    <h4 class="card-title" id="dog-name">{{this.name}}</h4>
+                                    <div class="pic-container">
+                                        <img src={{this.image_url}} class="pic">
+                                    </div>
+                                    <div class="about-dog">
+                                        <div class="gender">{{this.gender}}</div>
+                                        <div class="age">{{this.age}}</div>
+                                    </div>
+                                    <a href="#" class="btn btn-primary" id="adopt-me">Adopt Me</a>
                                 </div>
-                                <div class="about-dog">
-                                    <div class="gender">{{gender}}</div>
-                                    <div class="age">{{age}}</div>
-                                </div>
-                                <a href="#" class="btn btn-primary" id="adopt-me">Adopt Me</a>
                             </div>
-                        </div>
-                    </div>
+                        {{/each}}
                 </div>
             </div>
         </div>

@@ -83,7 +83,18 @@ router.get('/dogs', (req,res) => {
         }
     })
         .then((dogs) => {
-            console.log('dogs', dogs.map((obj) => {return obj.dataValues}))
+            var resultsArr = dogs.map((obj) => {return obj.dataValues})
+
+            console.log('dogs', resultsArr)
+            // res.render('home', {
+            //     name: 'Jackson',
+            //     img: 'sample_dog.jpg',
+            //     gender: 'F',
+            //     age: 'adult'
+            // })
+            res.render('home', {
+                dogData: resultsArr
+            })
         })
         .catch((err) => {
             console.log('Error', err)
@@ -101,16 +112,17 @@ router.get('/login', (req, res) => {
    })
         .then((users) => {
             console.log('users', users.map((obj) => {return obj.dataValues}))
+
         })
         .catch((err) => {
           console.log('Error', err)
         })
 })
 
-router.get('/users/:username', (req, res) => {
-   console.log(req.params.username)
-   console.log(req.query.name)
- })
+// router.get('/users/:username', (req, res) => {
+//    console.log(req.params.username)
+//    console.log(req.query.name)
+//  })
 
 // method="/users/eli?name=max&birthday=october"
 module.exports = router
