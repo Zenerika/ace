@@ -31,14 +31,16 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 
 app.get('/', function (req, res) {
-  // res.sendFile('login.html', { root : __dirname })
-  res.render('home', {
-    name: 'Jackson',
-    img: 'sample_dog.jpg',
-    gender: 'F',
-    age: 'adult'
-  })
-})
+    // res.sendFile('login.html', { root : __dirname })
+    
+  
+      // var i;
+      // for (i = 0; i < Dog.length; i++) {
+  
+      // }
+      res.render('home')
+    })
+
 
 app.get('/login', function (req, res) {
   res.render('login')

@@ -9,7 +9,7 @@
   "scripts": {
     "test": "node tests/test.js",
     "start": "node server.js",
-    "start:dev": "nodemon --watch"
+    "server": "nodemon --watch"
   },
   "repository": {
     "type": "git",
