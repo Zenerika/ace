@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/login.css">
     <title>Ace Adoption</title>
 </head>
 
@@ -16,12 +16,16 @@
     <nav class="navbar navbar-light bg-light">
         <a href="/" class="navbar-brand"><h2>Ace Adoption</h2></a>
         <div class="btn-group">
-          <a href="/signup">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Signup</button>
-          </a>
-          <a href="/login">
-              <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Login</button>
-          </a>
+          {{#if user}}
+            <p class="h5">Welcome {{this.user.first_name}}</p>
+          {{else}}
+            <a href="/signup">
+              <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Signup</button>
+            </a>
+            <a href="/login">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Login</button>
+            </a>
+          {{/if}}
         </div>
         <!-- <form class="form-inline">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

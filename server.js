@@ -1,20 +1,20 @@
-var users = [
-    {id: 1, username: 'bob', password: 'secret', email: 'bob@example.com'}
-    , {id: 2, username: 'scott', password: 'password', email: 'scott@example.com'}
-];
-
-/* Search Function */
-
-function findByEmail(email, callback) {
-    for (var i = 0, len = users.length; i < len; i++) {
-        var user = users[i];
-        if (user.email === email) {
-            // callback takes arguments (error,user)
-            return callback(null, user);
-        }
-    }
-    return callback(null, null);
-}
+// var users = [
+//     {id: 1, username: 'bob', password: 'secret', email: 'bob@example.com'}
+//     , {id: 2, username: 'scott', password: 'password', email: 'scott@example.com'}
+// ];
+//
+// /* Search Function */
+//
+// function findByEmail(email, callback) {
+//     for (var i = 0, len = users.length; i < len; i++) {
+//         var user = users[i];
+//         if (user.email === email) {
+//             // callback takes arguments (error,user)
+//             return callback(null, user);
+//         }
+//     }
+//     return callback(null, null);
+// }
 
 /* Express */
 
@@ -24,6 +24,7 @@ const exphbs = require('express-handlebars')
 const app = express()
 var bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
+const db = require('./models')
 
 app.use(express.static('Public'))
 
@@ -31,14 +32,16 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 
 app.get('/', function (req, res) {
-  // res.sendFile('login.html', { root : __dirname })
-  res.render('home', {
-    name: 'Jackson',
-    img: 'sample_dog.jpg',
-    gender: 'F',
-    age: 'adult'
-  })
-})
+    // res.sendFile('login.html', { root : __dirname })
+
+
+      // var i;
+      // for (i = 0; i < Dog.length; i++) {
+
+      // }
+      res.render('home')
+    })
+
 
 app.get('/login', function (req, res) {
   res.render('login')
@@ -95,24 +98,28 @@ passport.use(new LocalStrategy({
     },
     function (email, password, done) {
         // replace this with our search function, mysql/monogo/service/etc
-        findByEmail(email, function (err, user) {
-            if (err) {
-                return done(err);
-            }
+        //findByEmail(email, function (err, user) {
+        db.User.findOne({ where: {email: email} })
+          .then((user) => {
+            console.log('user: ', user.dataValues)
+
             if (!user) {
                 console.log('bad email')
                 return done(null, false, {message: 'Incorrect email.'});
             } else {
                 if (user.password === password) {
                     console.log('good email and password');
-                    return done(null, user);
+                    return done(null, user.dataValues);
                 } else {
                     console.log('good email and bad password');
                     return done(null, false, {message: 'Incorrect password.'});
                 }
             }
+          })
+          .catch((err) => {
+            return done(err, false)
+          })
 
-        })
     }
 ))
 
@@ -138,12 +145,13 @@ function (accessToken, refreshToken, profile, cb) {
 /* HTTP Methods */
 
 app.post('/login', function (req, res, next) {
+  console.log('req.body: ', req.body)
     passport.authenticate('local', function (err, user, info) {
         console.log(err, user, info);
         if (user) {
-            res.send({user: user});
+            res.render('home', {user: user})
         } else {
-            res.send({error: err, info: info});
+            res.render('login', {error: err, info: info});
         }
     })(req, res, next);
 });
