@@ -112,5 +112,9 @@ router.get('/users/:username', (req, res) => {
    console.log(req.query.name)
  })
 
+ router.post('/signup', (req, res) => {
+   console.log(req.body)
+ })
+
 // method="/users/eli?name=max&birthday=october"
 module.exports = router
