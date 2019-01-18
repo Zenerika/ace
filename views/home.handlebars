@@ -33,7 +33,7 @@
                     <hr>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">CITY</label>
-                        <select class="form-control" id="exampleFormControlSelect1" name="city">
+                        <select class="form-control" id="city" name="city">
                             <option>Houston</option>
                             <option>San Antonio</option>
                             <option>Austin</option>
@@ -49,13 +49,13 @@
                     <hr>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">AGE</label>
-                        <select class="form-control" id="exampleFormControlSelect1" name="age">
+                        <select class="form-control" id="age" name="age">
                             <option>puppy</option>
                             <option>adult</option>
                             <option>senior</option>
                         </select>
                     </div>
-                    <a href="#" class="btn btn-primary" id="submit">Submit</a>
+                    <button class="btn btn-primary" type="submit">Submit</button>
                 </form>
             </div>
         </div>
@@ -74,8 +74,11 @@
                                 <div class="about-dog">
                                     <div class="gender">{{gender}}</div>
                                     <div class="age">{{age}}</div>
+                                    <div class="breed">{{breed}}</div>
+                                    <div class="city">{{city}}</div>
+                                    <div class="price">{{price}}</div>
                                 </div>
-                                <class="btn btn-primary" id="adopt-me" onclick="filterDogs()">Adopt Me</a>
+                                <a href="#" class="btn btn-primary" id="adopt-me">Adopt Me</a>
                             </div>
                         </div>
                     </div>
