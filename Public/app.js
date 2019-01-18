@@ -1,5 +1,12 @@
 /* AJAX Dynamic Drop-Down */
 
-//var url = // need to pull column from db //
+function init() {
+    var url = 'api/breed.php?q={input}'
+    var widget = new AutoComplete('breedInput', url)
 
-//var widget = new AutoComplete('breedInput', config)
+}
+
+$(document).ready(init)
+
+
+

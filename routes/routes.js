@@ -6,7 +6,7 @@ const Op = Sequelize.Op
 
 const db = require('../models')
 
-router.get('/dogs', (req,res) => {
+router.get('/dogs', (req, res) => {
     // req = requested data from front end
     // res = retrieve data from database
     console.log(req.query)
@@ -117,6 +117,28 @@ router.get('/login', (req, res) => {
         .catch((err) => {
           console.log('Error', err)
         })
+})
+
+
+// search Dog table by breed, filter for "like" search
+router.get('/breed', (req, res) => {
+    // db.Dog.findAll({
+    //     where: {
+    //         breed: {
+    //             [Op.like]: '%' + req.query.breed + '%'
+    //         }
+    //     }
+    // })
+    db.Dog.aggregate('breed', 'DISTINCT', {
+        where: {
+            breed:{
+                [Op.like]: '%' + req.query.breed + '%'
+            }
+        },
+        plain:false})
+    .then((breedInput) => {
+        console.log(breedInput)
+    })
 })
 
 // router.get('/users/:username', (req, res) => {
