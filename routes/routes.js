@@ -106,8 +106,8 @@ router.get('/login', (req, res) => {
 
    db.User.findAll({
         where: {
-          emailLogin: req.query.email,
-          passwordLogin: req.query.password
+          email: req.query.emailLogin,
+          password: req.query.passwordLogin
         }
    })
         .then((users) => {
@@ -123,6 +123,10 @@ router.get('/login', (req, res) => {
 //    console.log(req.params.username)
 //    console.log(req.query.name)
 //  })
+
+ router.post('/signup', (req, res) => {
+   console.log(req.body)
+ })
 
 // method="/users/eli?name=max&birthday=october"
 module.exports = router
