@@ -25,6 +25,7 @@ const app = express()
 var bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
 const db = require('./models')
+const queryFile = require('./routes/queries/query.js')
 
 app.use(express.static('Public'))
 
@@ -149,7 +150,16 @@ app.post('/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
         console.log(err, user, info);
         if (user) {
-            res.render('home', {user: user})
+          queryFile.findCart()
+            .then ((cart) => {
+              console.log(cart)
+            })
+            .catch ((err) => {
+              console.log('Error:', err)
+            })
+
+          res.render('home', {user: user})
+
         } else {
             res.render('login', {error: err, info: info});
         }

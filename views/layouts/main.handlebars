@@ -9,6 +9,7 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/cart.css">
     <title>Ace Adoption</title>
 </head>
 
@@ -18,6 +19,9 @@
         <div class="btn-group">
           {{#if user}}
             <p class="h5">Welcome {{this.user.first_name}}</p>
+        <div class="btn-group">
+                <a href=""><button class="btn btn-outline-primary my-2 my-sm-0" type="button">Shopping Cart</button></a>
+        </div>
           {{else}}
             <a href="/signup">
               <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Signup</button>
@@ -27,12 +31,7 @@
             </a>
           {{/if}}
         </div>
-        <!-- <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form> -->
     </nav>
-    <!-- start of the left panel -->
     {{{body}}}
 </body>
 

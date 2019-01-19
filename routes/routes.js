@@ -3,16 +3,15 @@ const router = express.Router()
 const query = require('./queries/query.js')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
-
 const db = require('../models')
 
+// Search By Panel
 router.get('/dogs', (req,res) => {
     // req = requested data from front end
     // res = retrieve data from database
     console.log(req.query)
 
     let gender;
-
 
     if ((req.query.male && req.query.female) || (!req.query.male && !req.query.female)) {
         gender ={
@@ -71,8 +70,6 @@ router.get('/dogs', (req,res) => {
         }
     }
 
-
-
     db.Dog.findAll({
         where: {
             breed: req.query.breed,
@@ -81,19 +78,28 @@ router.get('/dogs', (req,res) => {
             adoption_fee: price,
             location: req.query.city
         }
-    })
+    }) 
         .then((dogs) => {
             var resultsArr = dogs.map((obj) => {return obj.dataValues})
-
             console.log('dogs', resultsArr)
-            // res.render('home', {
-            //     name: 'Jackson',
-            //     img: 'sample_dog.jpg',
-            //     gender: 'F',
-            //     age: 'adult'
-            // })
             res.render('home', {
                 dogData: resultsArr
+            })
+        })
+        .catch((err) => {
+            console.log('Error', err)
+        })
+})
+router.post('/adopt', (req, res) => {
+    console.log('req.body: ', req.body)
+    db.Cart.create({dog_id: req.body.dogID, user_id: req.user.id})
+    
+        .then((cartItem) => {
+            var adoptedDogs = cartItem.map((obj) => {return obj.dataValues})
+            console.log('cartItem', adoptedDogs)
+
+            res.render('home', {
+                adoptData: adoptedDogs
             })
         })
         .catch((err) => {
