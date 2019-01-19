@@ -8,6 +8,7 @@ var bodyParser = require('body-parser')
 // const cookieSession = require('cookie-session')
 const session = require('express-session')
 const db = require('./models')
+const queryFile = require('./routes/queries/query.js')
 const passport = require('passport')
 
 
@@ -37,8 +38,18 @@ passport.serializeUser(function(user, cb) {
 
 passport.deserializeUser(function(id, cb) {
   console.log('userdeserialze: ', id)
-  db.User.findOne({ where: {id: id} })
+  db.User.findOne({
+     where: {id: id},
+     include: [{
+      model: db.Dog,
+      // where: { state: Sequelize.col('project.state') }
+  }]
+     })
     .then((user) => {
+      var adoptedDogs = user.Dogs.map(dog => dog.dataValues)
+      console.log(adoptedDogs)
+      user = user.dataValues
+      user.cart = adoptedDogs
       cb(null, user)
     })
     .catch((err) => {
@@ -79,7 +90,23 @@ passport.use(new LocalStrategy({
 
 app.get('/', function (req, res) {
   console.log('req.user ', req.user)
-  res.render('home', {user: req.user})
+  if (req.user) {
+    queryFile.findCart(req.user.id)
+    .then ((user) => {
+      console.log(user)
+      var adoptedDogs = user.Dogs.map(dog => dog.dataValues)
+      console.log(adoptedDogs)
+      req.user.cart = adoptedDogs
+      console.log(req.user.cart)
+      res.render('home', {user:req.user, adoptData: adoptedDogs})
+    })
+    .catch ((err) => {
+      console.log('Error:', err)
+    })
+  }
+  else {
+    res.render('home', {user: req.user})
+  }
 })
 
 
@@ -136,10 +163,12 @@ function (accessToken, refreshToken, profile, cb) {
 
 /* HTTP Methods */
 
+
 app.post('/login', passport.authenticate('local'), function (req, res, next) {
     console.log('req.session: ', req.session, req.user)
       if (req.user) {
-          res.render('home', {user: req.user})
+
+          res.redirect('/');
       } else {
           res.render('login', {error: err, info: info});
       }
