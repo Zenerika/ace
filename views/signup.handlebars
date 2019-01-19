@@ -1,5 +1,5 @@
 <div id="signup">
-  <form action="/api/signup" method="post">
+  <form action="/signup" method="post">
     <p class="h3">Sign Up for an Account</p>
     <div class="form-group">
       <label>First Name</label>
@@ -16,6 +16,11 @@
     <div class="form-group">
       <label>Password</label>
       <input type="password" class="form-control" name="passwordSignup" placeholder="Password">
+      <small class="form-text text-muted">Password must be longer than 6 characters.</small>
+    </div>
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" class="form-control" name="confirmPasswordSignup" placeholder="Confirm Password">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
