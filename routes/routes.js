@@ -82,9 +82,14 @@ router.get('/dogs', (req,res) => {
         .then((dogs) => {
             var resultsArr = dogs.map((obj) => {return obj.dataValues})
             console.log('dogs', resultsArr)
+            console.log(req.user.cart)
             res.render('home', {
-                dogData: resultsArr
+                dogData: resultsArr,
+                adoptData: req.user.cart,
+                user: req.user
             })
+            console.log('req.user :', req.user)
+            console.log('req.session.passport.user :', req.session.passport.user)
         })
         .catch((err) => {
             console.log('Error', err)
@@ -95,33 +100,11 @@ router.post('/adopt', (req, res) => {
     db.Cart.create({dog_id: req.body.dogID, user_id: req.user.id})
     
         .then((cartItem) => {
-            var adoptedDogs = cartItem.map((obj) => {return obj.dataValues})
-            console.log('cartItem', adoptedDogs)
-
-            res.render('home', {
-                adoptData: adoptedDogs
-            })
+            console.log('cartItem', cartItem)
+            res.redirect('/')
         })
         .catch((err) => {
             console.log('Error', err)
-        })
-})
-
-router.get('/login', (req, res) => {
-   console.log(req.query)
-
-   db.User.findAll({
-        where: {
-          email: req.query.emailLogin,
-          password: req.query.passwordLogin
-        }
-   })
-        .then((users) => {
-            console.log('users', users.map((obj) => {return obj.dataValues}))
-
-        })
-        .catch((err) => {
-          console.log('Error', err)
         })
 })
 
@@ -130,9 +113,9 @@ router.get('/login', (req, res) => {
 //    console.log(req.query.name)
 //  })
 
- router.post('/signup', (req, res) => {
-   console.log(req.body)
- })
+ // router.post('/signup', (req, res) => {
+ //   console.log(req.body)
+ // })
 
 // method="/users/eli?name=max&birthday=october"
 module.exports = router
