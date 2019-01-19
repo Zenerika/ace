@@ -93,29 +93,14 @@ router.get('/dogs', (req,res) => {
             //     age: 'adult'
             // })
             res.render('home', {
-                dogData: resultsArr
+                dogData: resultsArr,
+                user: req.user
             })
+            console.log('req.user :', req.user)
+            console.log('req.session.passport.user :', req.session.passport.user)
         })
         .catch((err) => {
             console.log('Error', err)
-        })
-})
-
-router.get('/login', (req, res) => {
-   console.log(req.query)
-
-   db.User.findAll({
-        where: {
-          email: req.query.emailLogin,
-          password: req.query.passwordLogin
-        }
-   })
-        .then((users) => {
-            console.log('users', users.map((obj) => {return obj.dataValues}))
-
-        })
-        .catch((err) => {
-          console.log('Error', err)
         })
 })
 
@@ -124,9 +109,9 @@ router.get('/login', (req, res) => {
 //    console.log(req.query.name)
 //  })
 
- router.post('/signup', (req, res) => {
-   console.log(req.body)
- })
+ // router.post('/signup', (req, res) => {
+ //   console.log(req.body)
+ // })
 
 // method="/users/eli?name=max&birthday=october"
 module.exports = router
