@@ -24,7 +24,8 @@ const LocalStrategy = require('passport-local').Strategy
 app.use(session({
   secret: 'randomstring',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  expires: false
 }))
 
 app.use(passport.initialize())
@@ -156,29 +157,37 @@ app.post('/signup', function (req, res, next) {
     if (!req.body.firstNameSignup || !req.body.lastNameSignup
     || !req.body.emailSignup || !req.body.passwordSignup
     || !req.body.confirmPasswordSignup) {
-      console.log('missing field')
-      res.render('/signup', )
+      console.log('missing field(s)')
+      res.render('signup', {validate: 'missing field(s)'})
     }
-    // //verify email is not already in use
-    // else if (req.body.emailSignup) {
-    //  console.log('email is already in use')
-    //
-    // }
-    // //verify valid email format
-    // else if () {
-    //  console.log('invalid email format')
-    //
-    // }
-    // //verify password greater than 6 characters
-    // else if (req.body.passwordSignup <= 6) {
-    //  console.log('password less than 7 characters')
-    //
-    // }
-    // //verify password matches confirm password
-    // else if (req.body.passwordSignup !== req.body.confirmPasswordSignup) {
-    //  console.log('password does not match confirm password')
-    //
-    // } else {
+    //verify email is not already in use
+    else if (req.body.emailSignup) {
+      var email = req.body.emailSignup
+      db.User.findOne({ where: {email: email} })
+        .then((user) => {
+          console.log('email is already in use')
+          res.render('signup', {validate: user.dataValues.email + ' is already in use'})
+        })
+        .catch((err) => {
+          return false
+        })
+    }
+    //verify valid email format
+    if () {
+     console.log('invalid email format')
+
+    }
+    //verify password greater than 6 characters
+    else if (req.body.passwordSignup.length <= 6) {
+     console.log('password less than 7 characters')
+     res.render('signup', {validate: 'password less than 7 characters'})
+    }
+    //verify password matches confirm password
+    else if (req.body.passwordSignup !== req.body.confirmPasswordSignup) {
+     console.log('password does not match confirm password')
+     res.render('signup', {validate: 'password does not match confirm password'})
+    }
+    // else {
     //   db.User.create({
     //     email: req.body.emailSignup,
     //     password: req.body.passwordSignup,
@@ -187,13 +196,12 @@ app.post('/signup', function (req, res, next) {
     //   })
     //   .then((user) => {
     //     console.log('user: ', user)
+    //     res.render('login', {signup: 'Your account has been created. Please login.'})
     //   })
     //   .catch((err) => {
     //     console.log('error: ', err)
     //   })
     // }
-
-
 
 })
 
