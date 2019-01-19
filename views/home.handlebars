@@ -4,9 +4,9 @@
             <div class="categories">
                 <form action="/api/dogs" method="GET"">
                     <p class="h5">Search By:</p>
-                    <div class="form-group">
+                    <div class="form-group" id="breedInput">
                         <label for="exampleFormControlSelect1">BREED</label>
-                        <input class="form-control" name="breed" type="text" id="breedInput">
+                        <input class="form-control" name="breed" type="text">
                     </div>
                     <hr>
                     <p>GENDER</p>
@@ -86,3 +86,13 @@
             </div>
         </div>
     </div>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/json3.js"></script>
+    <script src="/js/autocomplete.js"></script>
+    <script>
+        function init() {
+            var url = 'breed?breed={input}'
+            var widget = new AutoComplete('breedInput', url)
+        }
+        $(document).ready(init)
+    </script>
