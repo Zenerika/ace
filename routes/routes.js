@@ -92,6 +92,7 @@ router.get('/dogs', (req, res) => {
             console.log('Error', err)
         })
 })
+
 router.post('/adopt', (req, res) => {
     console.log('req.body: ', req.body)
     db.Cart.create({dog_id: req.body.dogID, user_id: req.user.id})
@@ -121,12 +122,9 @@ router.get('/breed', (req, res) => {
             var breedValues = Object.values(arr)
             return breedValues
         })
-        // breedVal.forEach((e) => {
-        //     breedArr.concat(e)
-        // })
         console.log(breedVal)
-        console.log(breedArr.flat())
-        return breedArr
+        console.log(breedArr)
+        res.render(breedArr) 
     })
 })
 
