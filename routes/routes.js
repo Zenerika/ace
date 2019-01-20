@@ -7,8 +7,6 @@ const Op = Sequelize.Op
 const db = require('../models')
 
 router.get('/dogs', (req, res) => {
-    // req = requested data from front end
-    // res = retrieve data from database
     console.log(req.query)
 
     let gender;
@@ -72,7 +70,6 @@ router.get('/dogs', (req, res) => {
     }
 
 
-
     db.Dog.findAll({
         where: {
             breed: req.query.breed,
@@ -86,12 +83,6 @@ router.get('/dogs', (req, res) => {
             var resultsArr = dogs.map((obj) => {return obj.dataValues})
 
             console.log('dogs', resultsArr)
-            // res.render('home', {
-            //     name: 'Jackson',
-            //     img: 'sample_dog.jpg',
-            //     gender: 'F',
-            //     age: 'adult'
-            // })
             res.render('home', {
                 dogData: resultsArr
             })
@@ -122,13 +113,6 @@ router.get('/login', (req, res) => {
 
 // search Dog table by breed, filter for "like" search
 router.get('/breed', (req, res) => {
-    // db.Dog.findAll({
-    //     where: {
-    //         breed: {
-    //             [Op.like]: '%' + req.query.breed + '%'
-    //         }
-    //     }
-    // })
     db.Dog.aggregate('breed', 'DISTINCT', {
         where: {
             breed:{
@@ -136,15 +120,19 @@ router.get('/breed', (req, res) => {
             }
         },
         plain:false})
-    .then((breedInput) => {
-        console.log(breedInput)
+    .then((breedObj) => {
+        var breedArr = [].concat(breedVal)
+        var breedVal = breedObj.map((arr) => {
+            var breedValues = Object.values(arr)
+            return breedValues
+        })
+        // breedVal.forEach((e) => {
+        //     breedArr.concat(e)
+        // })
+        console.log(breedVal)
+        console.log(breedArr.flat())
+        return breedArr
     })
 })
 
-// router.get('/users/:username', (req, res) => {
-//    console.log(req.params.username)
-//    console.log(req.query.name)
-//  })
-
-// method="/users/eli?name=max&birthday=october"
 module.exports = router
