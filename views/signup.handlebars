@@ -1,6 +1,11 @@
 <div id="signup">
   <form action="/signup" method="post">
     <p class="h3">Sign Up for an Account</p>
+    {{#if validate}}
+    <div class="alert alert-danger" role="alert">
+      {{this.validate}}
+    </div>
+    {{/if}}
     <div class="form-group">
       <label>First Name</label>
       <input type="text" class="form-control" name="firstNameSignup" placeholder="First Name">
