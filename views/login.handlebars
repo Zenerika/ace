@@ -1,6 +1,11 @@
 <div id="signin">
   <form action="/login" method="post">
     <p class="h3">Already a Member? Log In</p>
+    {{#if signup}}
+    <div class="alert alert-success" role="alert">
+      {{this.signup}}
+    </div>
+    {{/if}}
     <div class="form-group">
       <label>Email Address</label>
       <input type="email" class="form-control" name="emailLogin" aria-describedby="emailHelp" placeholder="Email">

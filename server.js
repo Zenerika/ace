@@ -8,7 +8,6 @@ var bodyParser = require('body-parser')
 // const cookieSession = require('cookie-session')
 const session = require('express-session')
 const db = require('./models')
-const queryFile = require('./routes/queries/query.js')
 const passport = require('passport')
 
 
@@ -25,7 +24,8 @@ const LocalStrategy = require('passport-local').Strategy
 app.use(session({
   secret: 'randomstring',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  expires: false
 }))
 
 app.use(passport.initialize())
@@ -38,18 +38,8 @@ passport.serializeUser(function(user, cb) {
 
 passport.deserializeUser(function(id, cb) {
   console.log('userdeserialze: ', id)
-  db.User.findOne({
-     where: {id: id},
-     include: [{
-      model: db.Dog,
-      // where: { state: Sequelize.col('project.state') }
-  }]
-     })
+  db.User.findOne({ where: {id: id} })
     .then((user) => {
-      var adoptedDogs = user.Dogs.map(dog => dog.dataValues)
-      console.log(adoptedDogs)
-      user = user.dataValues
-      user.cart = adoptedDogs
       cb(null, user)
     })
     .catch((err) => {
@@ -90,23 +80,7 @@ passport.use(new LocalStrategy({
 
 app.get('/', function (req, res) {
   console.log('req.user ', req.user)
-  if (req.user) {
-    queryFile.findCart(req.user.id)
-    .then ((user) => {
-      console.log(user)
-      var adoptedDogs = user.Dogs.map(dog => dog.dataValues)
-      console.log(adoptedDogs)
-      req.user.cart = adoptedDogs
-      console.log(req.user.cart)
-      res.render('home', {user:req.user, adoptData: adoptedDogs})
-    })
-    .catch ((err) => {
-      console.log('Error:', err)
-    })
-  }
-  else {
-    res.render('home', {user: req.user})
-  }
+  res.render('home', {user: req.user})
 })
 
 
@@ -163,12 +137,10 @@ function (accessToken, refreshToken, profile, cb) {
 
 /* HTTP Methods */
 
-
 app.post('/login', passport.authenticate('local'), function (req, res, next) {
     console.log('req.session: ', req.session, req.user)
       if (req.user) {
-
-          res.redirect('/');
+          res.render('home', {user: req.user})
       } else {
           res.render('login', {error: err, info: info});
       }
@@ -180,49 +152,52 @@ app.get('/logout', function(req, res){
 });
 
 app.post('/signup', function (req, res, next) {
-  console.log('req.body: ', req.body)
     //verify all fields are filled
     if (!req.body.firstNameSignup || !req.body.lastNameSignup
     || !req.body.emailSignup || !req.body.passwordSignup
     || !req.body.confirmPasswordSignup) {
-      console.log('missing field')
-      res.render('/signup', )
+      console.log('Missing field(s).')
+      res.render('signup', {validate: 'Missing field(s).'})
     }
-    // //verify email is not already in use
-    // else if (req.body.emailSignup) {
-    //  console.log('email is already in use')
-    //
-    // }
-    // //verify valid email format
-    // else if () {
-    //  console.log('invalid email format')
-    //
-    // }
-    // //verify password greater than 6 characters
-    // else if (req.body.passwordSignup <= 6) {
-    //  console.log('password less than 7 characters')
-    //
-    // }
-    // //verify password matches confirm password
-    // else if (req.body.passwordSignup !== req.body.confirmPasswordSignup) {
-    //  console.log('password does not match confirm password')
-    //
-    // } else {
-    //   db.User.create({
-    //     email: req.body.emailSignup,
-    //     password: req.body.passwordSignup,
-    //     first_name: req.body.firstNameSignup,
-    //     last_name: req.body.lastNameSignup
-    //   })
-    //   .then((user) => {
-    //     console.log('user: ', user)
-    //   })
-    //   .catch((err) => {
-    //     console.log('error: ', err)
-    //   })
-    // }
-
-
+    //verify password greater than 6 characters
+    else if (req.body.passwordSignup.length <= 6) {
+      console.log('Password must be longer than 6 characters.')
+      res.render('signup', {validate: 'Password must be longer than 6 characters.'})
+    }
+    //verify password matches confirm password
+    else if (req.body.passwordSignup !== req.body.confirmPasswordSignup) {
+      console.log('Passwords must match.')
+      res.render('signup', {validate: 'Passwords must match.'})
+    }
+    //verify email is not already in use
+    else {
+      var email = req.body.emailSignup
+      db.User.findOne({ where: {email: email} })
+        .then((user) => {
+          console.log(user)
+          if (user !== null) {
+            console.log('Email is already in use.')
+            res.render('signup', {validate: user.dataValues.email + ' is already in use.'})
+          } else {
+              db.User.create({
+                email: req.body.emailSignup,
+                password: req.body.passwordSignup,
+                first_name: req.body.firstNameSignup,
+                last_name: req.body.lastNameSignup
+              })
+              .then((user) => {
+                console.log('user: ', user)
+                res.render('login', {signup: 'Your account has been created. Please login.'})
+              })
+              .catch((err) => {
+                console.log('error: ', err)
+              })
+          }
+        })
+        .catch((err) => {
+          console.log('error :', err)
+        })
+    }
 
 })
 
