@@ -89,20 +89,13 @@
                                     <div class="age">{{this.location}}</div>
                                     <div class="age">{{this.age}}</div>
                                 </div>
-<<<<<<< HEAD
-                                <a href="#" class="btn btn-primary" id="adopt-me">Adopt Me</a>
-                            </div>
-                        </div>
-                    {{/each}}
-=======
                                 <form action="/api/adopt" method="POST">
                                     <input type="text" name="dogID" value={{this.id}} style="display: none">
                                     <button class="btn btn-primary" id="adopt-me" type="submit">Adopt Me</button>
                                 </form>
                             </div>
                         </div>
-                        {{/each}}
->>>>>>> 03748dd9affeb04299779cbc538472393788281e
+                    {{/each}}
                 </div>
             </div>
         </div>
