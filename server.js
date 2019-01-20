@@ -156,50 +156,47 @@ app.post('/signup', function (req, res, next) {
     if (!req.body.firstNameSignup || !req.body.lastNameSignup
     || !req.body.emailSignup || !req.body.passwordSignup
     || !req.body.confirmPasswordSignup) {
-      console.log('missing field(s)')
-      res.render('signup', {validate: 'missing field(s)'})
+      console.log('Missing field(s).')
+      res.render('signup', {validate: 'Missing field(s).'})
+    }
+    //verify password greater than 6 characters
+    else if (req.body.passwordSignup.length <= 6) {
+      console.log('Password must be longer than 6 characters.')
+      res.render('signup', {validate: 'Password must be longer than 6 characters.'})
+    }
+    //verify password matches confirm password
+    else if (req.body.passwordSignup !== req.body.confirmPasswordSignup) {
+      console.log('Passwords must match.')
+      res.render('signup', {validate: 'Passwords must match.'})
     }
     //verify email is not already in use
-    else if (req.body.emailSignup) {
+    else {
       var email = req.body.emailSignup
       db.User.findOne({ where: {email: email} })
         .then((user) => {
           console.log(user)
           if (user !== null) {
-            console.log('email is already in use')
-            res.render('signup', {validate: user.dataValues.email + ' is already in use'})
+            console.log('Email is already in use.')
+            res.render('signup', {validate: user.dataValues.email + ' is already in use.'})
+          } else {
+              db.User.create({
+                email: req.body.emailSignup,
+                password: req.body.passwordSignup,
+                first_name: req.body.firstNameSignup,
+                last_name: req.body.lastNameSignup
+              })
+              .then((user) => {
+                console.log('user: ', user)
+                res.render('login', {signup: 'Your account has been created. Please login.'})
+              })
+              .catch((err) => {
+                console.log('error: ', err)
+              })
           }
         })
         .catch((err) => {
           console.log('error :', err)
         })
-    }
-    //verify valid email format
-
-    //verify password greater than 6 characters
-    else if (req.body.passwordSignup.length <= 6) {
-      console.log('password less than 7 characters')
-      res.render('signup', {validate: 'password less than 7 characters'})
-    }
-    //verify password matches confirm password
-    else if (req.body.passwordSignup !== req.body.confirmPasswordSignup) {
-      console.log('password does not match confirm password')
-      res.render('signup', {validate: 'password does not match confirm password'})
-    }
-    else {
-      db.User.create({
-        email: req.body.emailSignup,
-        password: req.body.passwordSignup,
-        first_name: req.body.firstNameSignup,
-        last_name: req.body.lastNameSignup
-      })
-      .then((user) => {
-        console.log('user: ', user)
-        res.render('login', {signup: 'Your account has been created. Please login.'})
-      })
-      .catch((err) => {
-        console.log('error: ', err)
-      })
     }
 
 })
