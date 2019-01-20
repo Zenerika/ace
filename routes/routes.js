@@ -6,8 +6,6 @@ const Op = Sequelize.Op
 const db = require('../models')
 
 router.get('/dogs', (req, res) => {
-    // req = requested data from front end
-    // res = retrieve data from database
     console.log(req.query)
 
     let gender;
@@ -110,13 +108,6 @@ router.post('/adopt', (req, res) => {
 
 // search Dog table by breed, filter for "like" search
 router.get('/breed', (req, res) => {
-    // db.Dog.findAll({
-    //     where: {
-    //         breed: {
-    //             [Op.like]: '%' + req.query.breed + '%'
-    //         }
-    //     }
-    // })
     db.Dog.aggregate('breed', 'DISTINCT', {
         where: {
             breed:{
@@ -124,19 +115,19 @@ router.get('/breed', (req, res) => {
             }
         },
         plain:false})
-    .then((breedInput) => {
-        console.log(breedInput)
+    .then((breedObj) => {
+        var breedArr = [].concat(breedVal)
+        var breedVal = breedObj.map((arr) => {
+            var breedValues = Object.values(arr)
+            return breedValues
+        })
+        // breedVal.forEach((e) => {
+        //     breedArr.concat(e)
+        // })
+        console.log(breedVal)
+        console.log(breedArr.flat())
+        return breedArr
     })
 })
 
-// router.get('/users/:username', (req, res) => {
-//    console.log(req.params.username)
-//    console.log(req.query.name)
-//  })
-
- // router.post('/signup', (req, res) => {
- //   console.log(req.body)
- // })
-
-// method="/users/eli?name=max&birthday=october"
 module.exports = router
