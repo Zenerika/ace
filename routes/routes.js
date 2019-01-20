@@ -3,7 +3,6 @@ const router = express.Router()
 const query = require('./queries/query.js')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
-
 const db = require('../models')
 
 router.get('/dogs', (req, res) => {
@@ -12,7 +11,6 @@ router.get('/dogs', (req, res) => {
     console.log(req.query)
 
     let gender;
-
 
     if ((req.query.male && req.query.female) || (!req.query.male && !req.query.female)) {
         gender ={
@@ -71,8 +69,6 @@ router.get('/dogs', (req, res) => {
         }
     }
 
-
-
     db.Dog.findAll({
         where: {
             breed: req.query.breed,
@@ -81,41 +77,33 @@ router.get('/dogs', (req, res) => {
             adoption_fee: price,
             location: req.query.city
         }
-    })
+    }) 
         .then((dogs) => {
             var resultsArr = dogs.map((obj) => {return obj.dataValues})
-
             console.log('dogs', resultsArr)
-            // res.render('home', {
-            //     name: 'Jackson',
-            //     img: 'sample_dog.jpg',
-            //     gender: 'F',
-            //     age: 'adult'
-            // })
+            console.log(req.user.cart)
             res.render('home', {
-                dogData: resultsArr
+                dogData: resultsArr,
+                adoptData: req.user.cart,
+                user: req.user
             })
+            console.log('req.user :', req.user)
+            console.log('req.session.passport.user :', req.session.passport.user)
         })
         .catch((err) => {
             console.log('Error', err)
         })
 })
-
-router.get('/login', (req, res) => {
-   console.log(req.query)
-
-   db.User.findAll({
-        where: {
-          emailLogin: req.query.email,
-          passwordLogin: req.query.password
-        }
-   })
-        .then((users) => {
-            console.log('users', users.map((obj) => {return obj.dataValues}))
-
+router.post('/adopt', (req, res) => {
+    console.log('req.body: ', req.body)
+    db.Cart.create({dog_id: req.body.dogID, user_id: req.user.id})
+    
+        .then((cartItem) => {
+            console.log('cartItem', cartItem)
+            res.redirect('/')
         })
         .catch((err) => {
-          console.log('Error', err)
+            console.log('Error', err)
         })
 })
 
@@ -145,6 +133,10 @@ router.get('/breed', (req, res) => {
 //    console.log(req.params.username)
 //    console.log(req.query.name)
 //  })
+
+ // router.post('/signup', (req, res) => {
+ //   console.log(req.body)
+ // })
 
 // method="/users/eli?name=max&birthday=october"
 module.exports = router

@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="left-panel">
             <div class="categories">
-                <form action="/api/dogs" method="GET"">
+                <form action="/api/dogs" method="GET">
                     <p class="h5">Search By:</p>
                     <div class="form-group" id="breedInput">
                         <label for="exampleFormControlSelect1">BREED</label>
@@ -62,6 +62,17 @@
         <!-- end of left panel -->
         <!-- dogs(body) -->
         <div class="body">
+            <div class="dogCart">
+                    {{#each adoptData}}
+                    <div class="dogCartItems">
+                        <div class="breed">{{this.breed}}</div>
+                        <div class="price">${{this.adoption_fee}}</div>
+                    </div>
+                    {{/each}}
+                    <a href="#">
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Checkout</button>
+                    </a>
+            </div>
             <div class="container">
                 <div class="row">
                     {{#each dogData}}
@@ -78,10 +89,20 @@
                                     <div class="age">{{this.location}}</div>
                                     <div class="age">{{this.age}}</div>
                                 </div>
+<<<<<<< HEAD
                                 <a href="#" class="btn btn-primary" id="adopt-me">Adopt Me</a>
                             </div>
                         </div>
                     {{/each}}
+=======
+                                <form action="/api/adopt" method="POST">
+                                    <input type="text" name="dogID" value={{this.id}} style="display: none">
+                                    <button class="btn btn-primary" id="adopt-me" type="submit">Adopt Me</button>
+                                </form>
+                            </div>
+                        </div>
+                        {{/each}}
+>>>>>>> 03748dd9affeb04299779cbc538472393788281e
                 </div>
             </div>
         </div>
