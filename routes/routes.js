@@ -125,7 +125,7 @@ router.get('/breed', (req, res) => {
             return prev.concat(curr);
           })
         console.log(breedArr)
-        return breedArr
+        res.send(breedArr)
     })
 })
 
