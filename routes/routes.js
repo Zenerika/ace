@@ -155,7 +155,7 @@ router.get('/dogs', (req,res) => {
         })
 })
 router.post('/adopt', (req, res) => {
-    console.log('req.body: ', req.body)
+    // console.log('req.body: ', req.body)
     db.Cart.create({dog_id: req.body.dogID, user_id: req.user.id})
     
         .then((cartItem) => {

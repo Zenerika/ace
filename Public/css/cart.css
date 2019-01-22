@@ -1,6 +1,6 @@
 .dogCart {
     position: absolute;
-    min-height: 20rem;
+    min-height: 0em;
     background: var(--pink);
     top: 10;
     right: 0;
@@ -13,6 +13,15 @@
 .dogCartItems {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+#checkout {
+    margin: 10px 80px;
+}
+.totalContainer {
+    display: flex;
+    justify-content: space-between;
 }
 
 
