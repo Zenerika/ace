@@ -1,12 +1,15 @@
 const express = require("express")
 const router = express.Router()
-const query = require('./queries/query.js')
-const Sequelize = require('sequelize');
+const queries = require('./queries/query.js')
+const document = require('../views/home.handlebars') // ???
+const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const db = require('../models')
 
 router.get('/dogs', (req, res) => {
     console.log(req.query)
+
+    let breed = document.getElementById('breedInput').value // ???
 
     let gender;
 
@@ -69,7 +72,7 @@ router.get('/dogs', (req, res) => {
 
     db.Dog.findAll({
         where: {
-            breed: req.query.breed,
+            breed: breed, // ???
             gender: gender,
             age: req.query.age,
             adoption_fee: price,
@@ -121,7 +124,7 @@ router.get('/breed', (req, res) => {
             var breedValues = Object.values(arr)
             return breedValues
         })
-        var breedArr = breedVal.reduce(function(prev, curr) {
+        var breedArr = breedVal.reduce((prev, curr) => {
             return prev.concat(curr);
           })
         console.log(breedArr)
