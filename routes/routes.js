@@ -117,14 +117,15 @@ router.get('/breed', (req, res) => {
         },
         plain:false})
     .then((breedObj) => {
-        var breedArr = [].concat(breedVal)
         var breedVal = breedObj.map((arr) => {
             var breedValues = Object.values(arr)
             return breedValues
         })
-        console.log(breedVal)
+        var breedArr = breedVal.reduce(function(prev, curr) {
+            return prev.concat(curr);
+          })
         console.log(breedArr)
-        res.render(breedArr) 
+        return breedArr
     })
 })
 
