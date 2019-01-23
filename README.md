@@ -33,14 +33,20 @@ These are the obstacles we faced:
 <dl>
     <dt> Finding a data set with images
     <dd> We were able to use [Mockaroo](https://www.mockaroo.com/) and a [Dog API](https://dog.ceo/dog-api/) to create our db.
-    
+</dl>
+<dl>
     <dt> Lack of documentation using Passport
-   <dd>  Trial/Error + asking for help
-    
+    <dd>  Trial/Error + asking for help
+</dl>
+<dl>
     <dt> Working as a team and finding the middle-ground (back-end, front-end, OAuth)
     <dd>  Lots of communication, frequent pull requests, scrum meetings, and fixing merge conflicts.
+</dl>
+<dl>    
     <dt> Connecting all the pieces together (full-stack), but that's when we learned how to use Express Handlebars.
     <dd>  We learned how to use Handelbars for HTML templating and created multiple documents to seperate concerns. 
+</dl>
+<dl>
     <dt> Organizing the routes/middleware, so that all three database models/tables worked cohesively (User/Dog/Shopping Cart).
     <dd>  We were able to use the #if and #each Handelbar methods to accomplish connect/show/hide the approporiate pieces.
 </dl>
