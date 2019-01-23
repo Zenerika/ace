@@ -141,7 +141,7 @@ router.get('/dogs', (req,res) => {
         .then((dogs) => {
             var resultsArr = dogs.map((obj) => {return obj.dataValues})
             console.log('dogs', resultsArr)
-            console.log(req.user.cart)
+            console.log('req.user.cart', req.user.cart)
             res.render('home', {
                 dogData: resultsArr,
                 adoptData: req.user.cart,
@@ -157,7 +157,6 @@ router.get('/dogs', (req,res) => {
 router.post('/adopt', (req, res) => {
     // console.log('req.body: ', req.body)
     db.Cart.create({dog_id: req.body.dogID, user_id: req.user.id})
-
         .then((cartItem) => {
             console.log('cartItem', cartItem)
             res.redirect('/')

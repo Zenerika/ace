@@ -82,7 +82,8 @@ const FACEBOOK_APP_SECRET = '52caefe50fa829ae902d8c69c60617dd'
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "/auth/facebook/callback"
+    callbackURL: "/auth/facebook/callback",
+    profileFields: ['email', 'first_name', 'last_name']
   },
   function (accessToken, refreshToken, profile, cb) {
     console.log(profile)
@@ -171,7 +172,7 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', {failureRedirect: '/login'}),
   function(req, res) {
-    console.log(profile)
+    console.log('req.username: ', req.username)
     res.render('home', {user: req.displayName})
 })
 
