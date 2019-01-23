@@ -5,21 +5,20 @@ const exphbs = require('express-handlebars')
 //const fs = require('fs-plus')
 const app = express()
 var bodyParser = require('body-parser')
-// const cookieSession = require('cookie-session')
 const session = require('express-session')
 const db = require('./models')
 const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 
+
+/* Passport Setup - Order Important*/
 
 app.use(express.static('Public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.engine('handlebars', exphbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
-
-/* Local Auth */
-
-const LocalStrategy = require('passport-local').Strategy
 
 app.use(session({
   secret: 'randomstring',
@@ -32,22 +31,20 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 passport.serializeUser(function(user, cb) {
-  console.log('user: ', user)
   cb(null, user.id)
 })
 
 passport.deserializeUser(function(id, cb) {
-  console.log('userdeserialze: ', id)
   db.User.findOne({ where: {id: id} })
     .then((user) => {
       cb(null, user)
     })
     .catch((err) => {
-      console.log('error: ', err)
       cb(null, false)
     })
-
 })
+
+/* Local Auth */
 
 passport.use(new LocalStrategy({
         // this maps the file names in the html file to the passport stuff
@@ -74,15 +71,30 @@ passport.use(new LocalStrategy({
           .catch((err) => {
             return done(err, false)
           })
-
     }
 ))
 
+/* Facebook Auth */
+
+const FACEBOOK_APP_ID = '1972214219741500'
+const FACEBOOK_APP_SECRET = '52caefe50fa829ae902d8c69c60617dd'
+
+passport.use(new FacebookStrategy({
+    clientID: FACEBOOK_APP_ID,
+    clientSecret: FACEBOOK_APP_SECRET,
+    callbackURL: "/auth/facebook/callback"
+  },
+  function (accessToken, refreshToken, profile, cb) {
+    console.log(profile)
+    return cb(null, profile)
+  }
+))
+
+/* HTTP Methods */
+
 app.get('/', function (req, res) {
-  console.log('req.user ', req.user)
   res.render('home', {user: req.user})
 })
-
 
 app.get('/login', function (req, res) {
   res.render('login')
@@ -92,53 +104,7 @@ app.get('/signup', function (req, res) {
   res.render('signup')
 })
 
-/* Express Validator */
-
-const { body,validationResult } = require('express-validator/check')
-const { sanitizeBody } = require('express-validator/filter')
-
-/* cookieSession config */
-
-
-// app.use(cookieSession({
-//     name: 'session',
-//     maxAge: 24 * 60 * 60 * 1000, //one day in milliseconds
-//     keys: ['randomstringhere']
-// }))
-
-/* Passport Setup */
-
-
-app.get('/success', function (req, res) {
-  res.send("You have successfully logged in")
-})
-app.get('/error', function (req, res) {
-  res.send("Error logging in")
-})
-
-
-
-/* Facebook Auth */
-
-const FacebookStrategy = require('passport-facebook').Strategy
-
-const FACEBOOK_APP_ID = '1972214219741500'
-const FACEBOOK_APP_SECRET = '52caefe50fa829ae902d8c69c60617dd'
-
-passport.use(new FacebookStrategy({
-  clientID: FACEBOOK_APP_ID,
-  clientSecret: FACEBOOK_APP_SECRET,
-  callbackURL: "/auth/facebook/callback"
-},
-function (accessToken, refreshToken, profile, cb) {
-  return cb(null, profile)
-}
-))
-
-/* HTTP Methods */
-
 app.post('/login', passport.authenticate('local'), function (req, res, next) {
-    console.log('req.session: ', req.session, req.user)
       if (req.user) {
           res.render('home', {user: req.user})
       } else {
@@ -174,7 +140,6 @@ app.post('/signup', function (req, res, next) {
       var email = req.body.emailSignup
       db.User.findOne({ where: {email: email} })
         .then((user) => {
-          console.log(user)
           if (user !== null) {
             console.log('Email is already in use.')
             res.render('signup', {validate: user.dataValues.email + ' is already in use.'})
@@ -198,16 +163,16 @@ app.post('/signup', function (req, res, next) {
           console.log('error :', err)
         })
     }
-
 })
 
 app.get('/auth/facebook',
   passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {failureRedirect: '/error'}),
+  passport.authenticate('facebook', {failureRedirect: '/login'}),
   function(req, res) {
-    res.redirect('/success')
+    console.log(profile)
+    res.render('home', {user: req.displayName})
 })
 
 const api = require('./routes/routes.js')

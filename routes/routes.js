@@ -110,7 +110,7 @@ router.get('/dogs', (req,res) => {
     else {
         city = {
         [Op.or]: ["Houston", "San Antonio", "Austin", "Dallas", "Fort Worth", "El Paso", "Amarillo", "Tyler", "Galveston", "Lubbock"]
-        }   
+        }
     }
 
     let age = {}
@@ -137,7 +137,7 @@ router.get('/dogs', (req,res) => {
             adoption_fee: price,
             location: city
         }
-    }) 
+    })
         .then((dogs) => {
             var resultsArr = dogs.map((obj) => {return obj.dataValues})
             console.log('dogs', resultsArr)
@@ -157,7 +157,7 @@ router.get('/dogs', (req,res) => {
 router.post('/adopt', (req, res) => {
     // console.log('req.body: ', req.body)
     db.Cart.create({dog_id: req.body.dogID, user_id: req.user.id})
-    
+
         .then((cartItem) => {
             console.log('cartItem', cartItem)
             res.redirect('/')
