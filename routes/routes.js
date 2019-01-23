@@ -114,18 +114,18 @@ router.get('/dogs', (req,res) => {
     }
 
     let age = {}
-    if (req.query.age === 'puppy') {
-        age = "puppy"
+    if (req.query.age === 'Puppy') {
+        age = "Puppy"
     }
-    else if (req.query.age === 'adult') {
-        age = "adult"
+    else if (req.query.age === 'Adult') {
+        age = "Adult"
     }
-    else if (req.query.age === 'senior') {
-        age = 'senior'
+    else if (req.query.age === 'Senior') {
+        age = 'Senior'
     }
     else {
         age = {
-        [Op.or]: ["puppy", "adult", "senior"]
+        [Op.or]: ["Puppy", "Adult", "Senior"]
         }
     }
 
