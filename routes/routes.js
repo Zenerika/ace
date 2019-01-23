@@ -1,20 +1,17 @@
 const express = require("express")
 const router = express.Router()
-const query = require('./queries/query.js')
-const Sequelize = require('sequelize');
+const queries = require('./queries/query')
+const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const db = require('../models')
 
-// Search By Panel
-router.get('/dogs', (req,res) => {
-    // req = requested data from front end
-    // res = retrieve data from database
+router.get('/dogs', (req, res) => {
     console.log(req.query)
 
     let gender;
 
     if ((req.query.male && req.query.female) || (!req.query.male && !req.query.female)) {
-        gender ={
+        gender = {
             [Op.or]: ["M", "F"]
         }
     }
@@ -154,6 +151,7 @@ router.get('/dogs', (req,res) => {
             console.log('Error', err)
         })
 })
+
 router.post('/adopt', (req, res) => {
     // console.log('req.body: ', req.body)
     db.Cart.create({dog_id: req.body.dogID, user_id: req.user.id})
@@ -167,14 +165,27 @@ router.post('/adopt', (req, res) => {
         })
 })
 
-// router.get('/users/:username', (req, res) => {
-//    console.log(req.params.username)
-//    console.log(req.query.name)
-//  })
 
- // router.post('/signup', (req, res) => {
- //   console.log(req.body)
- // })
+// search Dog table by breed, filter for "like" search
+router.get('/breed', (req, res) => {
+    db.Dog.aggregate('breed', 'DISTINCT', {
+        where: {
+            breed:{
+                [Op.like]: '%' + req.query.breed + '%'
+            }
+        },
+        plain:false})
+    .then((breedObj) => {
+        var breedVal = breedObj.map((arr) => {
+            var breedValues = Object.values(arr)
+            return breedValues
+        })
+        var breedArr = breedVal.reduce((prev, curr) => {
+            return prev.concat(curr);
+          })
+        console.log(breedArr)
+        res.send(breedArr)
+    })
+})
 
-// method="/users/eli?name=max&birthday=october"
 module.exports = router
