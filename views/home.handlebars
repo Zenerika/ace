@@ -5,7 +5,8 @@
                 <form action="/api/dogs" method="GET">
                     <p class="h5">Search By:</p>
                     <p>BREED</p>
-                    <div class="form-group" id="breedInput" name="breed">BREED</div>
+                    <input type="hidden" id="hiddenBreedInput" name="breed" value="">
+                    <div class="form-group" id="breedInput"></div>
                     <hr>
                     <p>GENDER</p>
                     <div class="form-check form-check-inline">
@@ -102,8 +103,25 @@
     <script src="/js/autocomplete.js"></script>
     <script>
         function init() {
-            var url = 'api/breed?breed={input}'
-            var widget = new AutoComplete('breedInput', url)
+            var onChange = function (newValue) {
+            // defensive
+            if (!newValue || newValue.length < 1) return
+            document.getElementById('hiddenBreedInput').value = newValue[0][0].value
         }
+            var config = {
+                onChange: onChange,
+                maxTokenGroups: 1,
+                lists: {
+                    states: {
+                        ajaxOpts: {
+                            url: 'api/breed?breed={input}'
+                        },
+                        cacheAjax: true
+                    }
+                }
+            }
+            var widget = new AutoComplete('breedInput', config)
+        }
+
         $(document).ready(init)
     </script>

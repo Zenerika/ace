@@ -1,7 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const queries = require('./queries/query.js')
-const document = require('../views/home.handlebars') // ???
+const queries = require('./queries/query')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const db = require('../models')
@@ -9,12 +8,10 @@ const db = require('../models')
 router.get('/dogs', (req, res) => {
     console.log(req.query)
 
-    let breed = document.getElementById('breedInput').value // ???
-
     let gender;
 
     if ((req.query.male && req.query.female) || (!req.query.male && !req.query.female)) {
-        gender ={
+        gender = {
             [Op.or]: ["M", "F"]
         }
     }
@@ -72,7 +69,7 @@ router.get('/dogs', (req, res) => {
 
     db.Dog.findAll({
         where: {
-            breed: breed, // ???
+            breed: req.query.breed,
             gender: gender,
             age: req.query.age,
             adoption_fee: price,
