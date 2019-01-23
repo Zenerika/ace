@@ -21,8 +21,10 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">PRICE</label>
                         <select class="form-control" id="exampleFormControlSelect1" name="price">
-                            <option><$100</option>
-                            <option>$100-$250</option>
+                            <option>I'm ballin. It doesn't matter.</option>
+                            <option>
+                                <$100</option> <option>$100-$250
+                            </option>
                             <option>$250-$500</option>
                             <option>$500-$750</option>
                             <option>$750-$1,000</option>
@@ -32,6 +34,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">CITY</label>
                         <select class="form-control" id="city" name="city">
+                            <option>Texas (all cities)</option>
                             <option>Houston</option>
                             <option>San Antonio</option>
                             <option>Austin</option>
@@ -48,6 +51,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">AGE</label>
                         <select class="form-control" id="age" name="age">
+                            <option>All ages</option>
                             <option>puppy</option>
                             <option>adult</option>
                             <option>senior</option>
@@ -60,17 +64,23 @@
         <!-- end of left panel -->
         <!-- dogs(body) -->
         <div class="body">
+            {{#if user}}
             <div class="dogCart">
                     {{#each adoptData}}
                     <div class="dogCartItems">
                         <div class="breed">{{this.breed}}</div>
-                        <div class="price">${{this.adoption_fee}}</div>
+                        <div class="price" id="priceCart">${{this.adoption_fee}}</div>
                     </div>
                     {{/each}}
+                    <div class="totalContainer">
+                    <div class="total"><strong>Total:</strong></div>
+                    <div class="totalAmount"><strong>$1,500</strong></div>
+                    </div>
                     <a href="#">
-                        <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Checkout</button>
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="checkout">Checkout</button>
                     </a>
             </div>
+            {{/if}}
             <div class="container">
                 <div class="row">
                     {{#each dogData}}

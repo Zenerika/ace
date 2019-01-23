@@ -57,6 +57,11 @@ router.get('/dogs', (req, res) => {
             }]
         }
     }
+    else if (req.query.price === 'I\'m ballin. It doesn\'t matter.') {
+        price = {
+            [Op.lt]: 1000000000
+        }
+    }
     else {
         price = {
             [Op.and]: [{
@@ -67,15 +72,69 @@ router.get('/dogs', (req, res) => {
         }
     }
 
+    let city = {}
+
+    if (req.query.city === 'Houston') {
+        city = "Houston"
+    }
+    else if (req.query.city === 'San Antonio') {
+        city = "San Antonio"
+    }
+    else if (req.query.city == 'Austin') {
+        city = "Austin"
+    }
+    else if (req.query.city == 'Dallas') {
+        city = "Dallas"
+    }
+    else if (req.query.city == 'Fort Worth') {
+        city = "Fort Worth"
+    }
+    else if (req.query.city == 'El Paso') {
+        city = "El Paso"
+    }
+    else if (req.query.city == 'Amarillo') {
+        city = "Amarillo"
+    }
+    else if (req.query.city == 'Tyler') {
+        city = "Tyler"
+    }
+    else if (req.query.city == 'Galveston') {
+        city = "Galveston"
+    }
+    else if (req.query.city == 'Lubbock') {
+        city = "Lubbock"
+    }
+    else {
+        city = {
+        [Op.or]: ["Houston", "San Antonio", "Austin", "Dallas", "Fort Worth", "El Paso", "Amarillo", "Tyler", "Galveston", "Lubbock"]
+        }
+    }
+
+    let age = {}
+    if (req.query.age === 'puppy') {
+        age = "puppy"
+    }
+    else if (req.query.age === 'adult') {
+        age = "adult"
+    }
+    else if (req.query.age === 'senior') {
+        age = 'senior'
+    }
+    else {
+        age = {
+        [Op.or]: ["puppy", "adult", "senior"]
+        }
+    }
+
     db.Dog.findAll({
         where: {
             breed: req.query.breed,
             gender: gender,
-            age: req.query.age,
+            age: age,
             adoption_fee: price,
-            location: req.query.city
+            location: city
         }
-    }) 
+    })
         .then((dogs) => {
             var resultsArr = dogs.map((obj) => {return obj.dataValues})
             console.log('dogs', resultsArr)
@@ -94,9 +153,9 @@ router.get('/dogs', (req, res) => {
 })
 
 router.post('/adopt', (req, res) => {
-    console.log('req.body: ', req.body)
+    // console.log('req.body: ', req.body)
     db.Cart.create({dog_id: req.body.dogID, user_id: req.user.id})
-    
+
         .then((cartItem) => {
             console.log('cartItem', cartItem)
             res.redirect('/')
