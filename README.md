@@ -31,9 +31,9 @@ This app used the following technologies:
 ## Tech Issues
 These are the obstacles we faced:
 * Finding a data set with images
-    -- We were able to use [Mockaroo](https://www.mockaroo.com/) and a [Dog API](https://dog.ceo/dog-api/) to create our db.
+> We were able to use [Mockaroo](https://www.mockaroo.com/) and a [Dog API](https://dog.ceo/dog-api/) to create our db.
 * Lack of documentation using Passport
-    -- Trial/Error + asking for help
+- Trial/Error + asking for help
 * Working as a team and finding the middle-ground (back-end, front-end, OAuth)
     -- Lots of communication, frequent pull requests, scrum meetings, and fixing merge conflicts.
 * Connecting all the pieces together (full-stack), but that's when we learned how to use Express Handlebars.
