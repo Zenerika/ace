@@ -31,15 +31,15 @@ This app used the following technologies:
 ## Tech Issues
 These are the obstacles we faced:
 <dl>
-    <dt> Finding a data set with images
+    <dt> * Finding a data set with images
     <dd> We were able to use [Mockaroo](https://www.mockaroo.com/) and a [Dog API](https://dog.ceo/dog-api/) to create our db.
 </dl>
 <dl>
-    <dt> Lack of documentation using Passport
+    <dt> *Lack of documentation using Passport
     <dd>  Trial/Error + asking for help
 </dl>
 <dl>
-    <dt> Working as a team and finding the middle-ground (back-end, front-end, OAuth)
+    <dt>*Working as a team and finding the middle-ground (back-end, front-end, OAuth)
     <dd>  Lots of communication, frequent pull requests, scrum meetings, and fixing merge conflicts.
 </dl>
 <dl>    
@@ -48,7 +48,7 @@ These are the obstacles we faced:
 </dl>
 <dl>
     <dt> Organizing the routes/middleware, so that all three database models/tables worked cohesively (User/Dog/Shopping Cart).
-    <dd>  We were able to use the #if and #each Handelbar methods to accomplish connect/show/hide the approporiate pieces.
+    <dd>  We were able to use the #if and #each Handelbar methods to connect, show and hide the approporiate pieces.
 </dl>
 
 
