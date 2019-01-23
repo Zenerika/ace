@@ -19,7 +19,6 @@
 .body {
     width: 80vw;
     height: 100vh;
-    /* border: solid blue; */
 }
 
 #dog-name {
@@ -28,14 +27,20 @@
 }
 
 .about-dog {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around; 
     font-size: 20px;
     margin: 10px 10px;
     color: gray;
 }
-
+.topRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around; 
+}
+.bottomRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around; 
+}
 #adopt-me {
     width: 100%;
 }
@@ -46,8 +51,11 @@
 }
 
 .pic {
-    width: 70%;
-    height: 70%;
+ 
+    width:  275px;
+    height: 175px;
+    object-fit:scale-down;
+
 }
 
 #card-body {
