@@ -9,7 +9,7 @@ const session = require('express-session')
 const db = require('./models')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const FacebookStrategy = require('passport-facebook').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 
 /* Passport Setup - Order Important*/
@@ -47,7 +47,7 @@ passport.deserializeUser(function(id, cb) {
     .then((user) => {
       var adoptedDogs = user.Dogs.map(dog => dog.dataValues)
       console.log(adoptedDogs)
-      
+
       var total = 0;
 
       adoptedDogs.forEach(function (dog){
@@ -79,7 +79,7 @@ passport.use(new LocalStrategy({
           .then((user) => {
 
             if (!user) {
-                console.log('bad email')
+                console.log('bad email');
                 return done(null, false, {message: 'Incorrect email.'});
             } else {
                 if (user.password === password) {
@@ -97,19 +97,18 @@ passport.use(new LocalStrategy({
     }
 ))
 
-/* Facebook Auth */
+/* Google Auth */
 
-const FACEBOOK_APP_ID = '1972214219741500'
-const FACEBOOK_APP_SECRET = '52caefe50fa829ae902d8c69c60617dd'
+const GOOGLE_CLIENT_ID = '484414699212-buau7mv01v6262bovdf01qh71lig07cv.apps.googleusercontent.com'
+const GOOGLE_CLIENT_SECRET = 'P6dxEfXe-wWh4IenJcUmH0Xn'
 
-passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "/auth/facebook/callback",
-    profileFields: ['email', 'first_name', 'last_name']
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "/auth/google/callback"
   },
-  function (accessToken, refreshToken, profile, cb) {
-    console.log(profile)
+  function(accessToken, refreshToken, profile, cb) {
+    console.log('profile: ', profile.email)
     return cb(null, profile)
   }
 ))
@@ -189,14 +188,14 @@ app.post('/signup', function (req, res, next) {
     }
 })
 
-app.get('/auth/facebook',
-  passport.authenticate('facebook'));
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
 
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {failureRedirect: '/login'}),
+app.get('/auth/google/callback',
+  passport.authenticate('google', {failureRedirect: '/login'}),
   function(req, res) {
-    console.log('req.username: ', req.username)
-    res.render('home', {user: req.displayName})
+    console.log('req.first_name: ', req.first_name)
+    res.render('home', {user: req.first_name})
 })
 
 const api = require('./routes/routes.js')
