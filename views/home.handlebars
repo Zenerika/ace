@@ -3,11 +3,10 @@
         <div class="left-panel">
             <div class="categories">
                 <form action="/api/dogs" method="GET">
-                    <p id="searchBy">Search By:</p>
-                    <div class="form-group" id="breed">
-                        <label for="exampleFormControlSelect1">BREED</label>
-                        <input class="form-control" name="breed" type="text" id="breedInput">
-                    </div>
+                    <p class="h5">Search By:</p>
+                    <p>BREED</p>
+                    <input type="hidden" id="hiddenBreedInput" name="breed" value="">
+                    <div class="form-group" id="breedInput"></div>
                     <hr>
                     <p>GENDER</p>
                     <div class="form-check form-check-inline">
@@ -104,8 +103,35 @@
                                 </form>
                             </div>
                         </div>
-                        {{/each}}
+                    {{/each}}
                 </div>
             </div>
         </div>
     </div>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/json3.js"></script>
+    <script src="/js/autocomplete.js"></script>
+    <script>
+        function init() {
+            var onChange = function (newValue) {
+            // defensive
+            if (!newValue || newValue.length < 1) return
+            document.getElementById('hiddenBreedInput').value = newValue[0][0].value
+        }
+            var config = {
+                onChange: onChange,
+                maxTokenGroups: 1,
+                lists: {
+                    states: {
+                        ajaxOpts: {
+                            url: 'api/breed?breed={input}'
+                        },
+                        cacheAjax: true
+                    }
+                }
+            }
+            var widget = new AutoComplete('breedInput', config)
+        }
+
+        $(document).ready(init)
+    </script>
