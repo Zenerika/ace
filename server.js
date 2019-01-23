@@ -67,6 +67,15 @@ passport.deserializeUser(function(id, cb) {
 
 })
 
+// cart middleware
+app.use(function (req, res, nextFn) {
+  // user is logged in; add their cart to the user object
+  if (req.user) {
+    // TODO: add cart here; attach to req.user
+  }
+  nextFn()
+})
+
 /* Local Auth */
 
 passport.use(new LocalStrategy({
@@ -113,14 +122,27 @@ passport.use(new FacebookStrategy({
   }
 ))
 
+
+
+
+
 /* HTTP Methods */
 
 app.get('/', function (req, res) {
-  res.render('home', {user: req.user})
+  let cart = null
+  if (req.user && req.user.cart) {
+    cart = req.user.cart
+  }
+  
+  res.render('home', {
+    user: req.user,
+    adoptData: cart
+  })
 })
 
 app.get('/login', function (req, res) {
   res.render('login')
+  
 })
 
 app.get('/signup', function (req, res) {
@@ -130,6 +152,7 @@ app.get('/signup', function (req, res) {
 app.post('/login', passport.authenticate('local'), function (req, res, next) {
       if (req.user) {
           res.render('home', {user: req.user})
+          
       } else {
           res.render('login', {error: err, info: info});
       }
