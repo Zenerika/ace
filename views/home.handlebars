@@ -65,6 +65,7 @@
         <!-- end of left panel -->
         <!-- dogs(body) -->
         <div class="body">
+            {{#if user}}
             <div class="dogCart">
                     {{#each adoptData}}
                     <div class="dogCartItems">
@@ -80,6 +81,7 @@
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="checkout">Checkout</button>
                     </a>
             </div>
+            {{/if}}
             <div class="container">
                 <div class="row">
                     {{#each dogData}}
