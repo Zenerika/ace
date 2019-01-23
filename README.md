@@ -32,7 +32,7 @@ This app used the following technologies:
 These are the obstacles we faced:
 <dl>
     <dt>1. Finding a data set with images
-    <dd> We were able to use <a href="https://www.mockaroo.com/">Mockaroo</a> and a [Dog API](https://dog.ceo/dog-api/) to create our db.
+    <dd> We were able to use <a href="https://www.mockaroo.com/">Mockaroo</a> and a <a href="https://dog.ceo/dog-api/">Dog API</a> to create our db.
 </dl>
 <dl>
     <dt>2. Lack of documentation using Passport
