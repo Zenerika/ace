@@ -83,28 +83,28 @@ router.get('/dogs', (req,res) => {
     else if (req.query.city === 'San Antonio') {
         city = "San Antonio"
     }
-    else if (req.query.city == 'Austin') {
+    else if (req.query.city === 'Austin') {
         city = "Austin"
     }
-    else if (req.query.city == 'Dallas') {
+    else if (req.query.city === 'Dallas') {
         city = "Dallas"
     }
-    else if (req.query.city == 'Fort Worth') {
+    else if (req.query.city === 'Fort Worth') {
         city = "Fort Worth"
     }
-    else if (req.query.city == 'El Paso') {
+    else if (req.query.city === 'El Paso') {
         city = "El Paso"
     }
-    else if (req.query.city == 'Amarillo') {
+    else if (req.query.city === 'Amarillo') {
         city = "Amarillo"
     }
-    else if (req.query.city == 'Tyler') {
+    else if (req.query.city === 'Tyler') {
         city = "Tyler"
     }
-    else if (req.query.city == 'Galveston') {
+    else if (req.query.city === 'Galveston') {
         city = "Galveston"
     }
-    else if (req.query.city == 'Lubbock') {
+    else if (req.query.city === 'Lubbock') {
         city = "Lubbock"
     }
     else {
