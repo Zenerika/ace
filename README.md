@@ -32,7 +32,7 @@ This app used the following technologies:
 These are the obstacles we faced:
 <dl>
     <dt>1. Finding a data set with images
-    <dd> We were able to use <a href="https://www.mockaroo.com/">Mockaroo</a> and a <a href="https://dog.ceo/dog-api/">Dog API</a> to create our db.
+    <dd> We were able to use <a href="https://www.mockaroo.com/">Mockaroo</a> and <a href="https://dog.ceo/dog-api/">Dog API</a> to create our db.
 </dl>
 <dl>
     <dt>2. Lack of documentation using Passport
@@ -44,11 +44,11 @@ These are the obstacles we faced:
 </dl>
 <dl>    
     <dt>4. Connecting all the pieces together (full-stack), but that's when we learned how to use Express Handlebars.
-    <dd>  We learned how to use Handelbars for HTML templating and created multiple documents to seperate concerns. 
+    <dd>  We learned how to use Handelbars for HTML templating and created multiple documents to separate concerns. 
 </dl>
 <dl>
     <dt>5. Organizing the routes/middleware, so that all three database models/tables worked cohesively (User/Dog/Shopping Cart).
-    <dd>  We were able to use the #if and #each Handelbar methods to connect, show and hide the approporiate pieces.
+    <dd>  We were able to use the #if and #each Handelbar methods to connect, show, and hide the approporiate pieces.
 </dl>
 
 
