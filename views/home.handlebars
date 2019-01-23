@@ -52,9 +52,9 @@
                         <label for="exampleFormControlSelect1">AGE</label>
                         <select class="form-control" id="age" name="age">
                             <option>All ages</option>
-                            <option>puppy</option>
-                            <option>adult</option>
-                            <option>senior</option>
+                            <option>Puppy</option>
+                            <option>Adult</option>
+                            <option>Senior</option>
                         </select>
                     </div>
                     <button class="btn btn-primary" type="submit">Submit</button>
@@ -74,7 +74,7 @@
                     {{/each}}
                     <div class="totalContainer">
                     <div class="total"><strong>Total:</strong></div>
-                    <div class="totalAmount"><strong>$1,500</strong></div>
+                    <div class="totalAmount"><strong>${{user.cartTotal}}</strong></div>
                     </div>
                     <a href="#">
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="checkout">Checkout</button>

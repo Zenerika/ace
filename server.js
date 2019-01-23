@@ -34,14 +34,37 @@ passport.serializeUser(function(user, cb) {
   cb(null, user.id)
 })
 
+
 passport.deserializeUser(function(id, cb) {
-  db.User.findOne({ where: {id: id} })
+  console.log('userdeserialze: ', id)
+  db.User.findOne({
+     where: {id: id},
+     include: [{
+      model: db.Dog,
+      // where: { state: Sequelize.col('project.state') }
+  }]
+     })
     .then((user) => {
+      var adoptedDogs = user.Dogs.map(dog => dog.dataValues)
+      console.log(adoptedDogs)
+      
+      var total = 0;
+
+      adoptedDogs.forEach(function (dog){
+        total += dog.adoption_fee
+      })
+      console.log("Total:", total)
+
+      user = user.dataValues
+      user.cartTotal = total
+      user.cart = adoptedDogs
       cb(null, user)
     })
     .catch((err) => {
+      console.log('error: ', err)
       cb(null, false)
     })
+
 })
 
 /* Local Auth */
