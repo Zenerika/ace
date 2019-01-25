@@ -11,7 +11,6 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-
 /* Passport Setup - Order Important*/
 
 app.use(express.static('Public'))
@@ -33,7 +32,6 @@ app.use(passport.session())
 passport.serializeUser(function(user, cb) {
   cb(null, user.id)
 })
-
 
 passport.deserializeUser(function(id, cb) {
   console.log('userdeserialze: ', id)
@@ -116,15 +114,32 @@ passport.use(new GoogleStrategy({
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
   },
-  function(accessToken, refreshToken, profile, cb) {
-    console.log('profile: ', profile.email)
-    return cb(null, profile)
-  }
-))
+  function(token, refreshToken, profile, cb) {
+    console.log('profile: ', profile)
 
-
-
-
+    db.User.findOne({ where: {email: profile.emails[0].value} })
+      .then((user) => {
+        console.log('good google id')
+        console.log('user: ', user)
+        return cb(null, user.dataValues);
+      })
+      .catch((err) => {
+        console.log('google id not found - signing up')
+        db.User.create({
+          email: profile.emails[0].value,
+          first_name: profile.name.givenName,
+          last_name: profile.name.familyName,
+          google_id: profile.id
+        })
+        .then((user) => {
+          console.log('user: ', user)
+          return cb(null, user.dataValues);
+        })
+        .catch((err) => {
+          console.log('error: ', err)
+        })
+      })
+}))
 
 /* HTTP Methods */
 
@@ -133,7 +148,7 @@ app.get('/', function (req, res) {
   if (req.user && req.user.cart) {
     cart = req.user.cart
   }
-  
+
   res.render('home', {
     user: req.user,
     adoptData: cart
@@ -142,7 +157,6 @@ app.get('/', function (req, res) {
 
 app.get('/login', function (req, res) {
   res.render('login')
-  
 })
 
 app.get('/signup', function (req, res) {
@@ -152,7 +166,7 @@ app.get('/signup', function (req, res) {
 app.post('/login', passport.authenticate('local'), function (req, res, next) {
       if (req.user) {
           res.render('home', {user: req.user})
-          
+
       } else {
           res.render('login', {error: err, info: info});
       }
@@ -212,13 +226,17 @@ app.post('/signup', function (req, res, next) {
 })
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+  passport.authenticate('google', { scope:
+      [ 'https://www.googleapis.com/auth/plus.login',
+      'https://www.googleapis.com/auth/plus.profile.emails.read',
+      'https://www.googleapis.com/auth/userinfo.profile' ] }
+));
 
 app.get('/auth/google/callback',
   passport.authenticate('google', {failureRedirect: '/login'}),
   function(req, res) {
-    console.log('req.first_name: ', req.first_name)
-    res.render('home', {user: req.first_name})
+    console.log('req.user: ', req.user)
+    res.render('home', {user: req.user})
 })
 
 const api = require('./routes/routes.js')
