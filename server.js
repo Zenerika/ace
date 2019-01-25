@@ -9,8 +9,7 @@ const session = require('express-session')
 const db = require('./models')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const FacebookStrategy = require('passport-facebook').Strategy
-
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 /* Passport Setup - Order Important*/
 
@@ -34,7 +33,6 @@ passport.serializeUser(function(user, cb) {
   cb(null, user.id)
 })
 
-
 passport.deserializeUser(function(id, cb) {
   console.log('userdeserialze: ', id)
   db.User.findOne({
@@ -47,7 +45,7 @@ passport.deserializeUser(function(id, cb) {
     .then((user) => {
       var adoptedDogs = user.Dogs.map(dog => dog.dataValues)
       console.log(adoptedDogs)
-      
+
       var total = 0;
 
       adoptedDogs.forEach(function (dog){
@@ -88,7 +86,7 @@ passport.use(new LocalStrategy({
           .then((user) => {
 
             if (!user) {
-                console.log('bad email')
+                console.log('bad email');
                 return done(null, false, {message: 'Incorrect email.'});
             } else {
                 if (user.password === password) {
@@ -106,25 +104,42 @@ passport.use(new LocalStrategy({
     }
 ))
 
-/* Facebook Auth */
+/* Google Auth */
 
-const FACEBOOK_APP_ID = '1972214219741500'
-const FACEBOOK_APP_SECRET = '52caefe50fa829ae902d8c69c60617dd'
+const GOOGLE_CLIENT_ID = '484414699212-buau7mv01v6262bovdf01qh71lig07cv.apps.googleusercontent.com'
+const GOOGLE_CLIENT_SECRET = 'P6dxEfXe-wWh4IenJcUmH0Xn'
 
-passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "/auth/facebook/callback"
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "/auth/google/callback"
   },
-  function (accessToken, refreshToken, profile, cb) {
-    console.log(profile)
-    return cb(null, profile)
-  }
-))
+  function(token, refreshToken, profile, cb) {
+    console.log('profile: ', profile)
 
-
-
-
+    db.User.findOne({ where: {email: profile.emails[0].value} })
+      .then((user) => {
+        console.log('good google id')
+        console.log('user: ', user)
+        return cb(null, user.dataValues);
+      })
+      .catch((err) => {
+        console.log('google id not found - signing up')
+        db.User.create({
+          email: profile.emails[0].value,
+          first_name: profile.name.givenName,
+          last_name: profile.name.familyName,
+          google_id: profile.id
+        })
+        .then((user) => {
+          console.log('user: ', user)
+          return cb(null, user.dataValues);
+        })
+        .catch((err) => {
+          console.log('error: ', err)
+        })
+      })
+}))
 
 /* HTTP Methods */
 
@@ -133,7 +148,7 @@ app.get('/', function (req, res) {
   if (req.user && req.user.cart) {
     cart = req.user.cart
   }
-  
+
   res.render('home', {
     user: req.user,
     adoptData: cart
@@ -142,7 +157,6 @@ app.get('/', function (req, res) {
 
 app.get('/login', function (req, res) {
   res.render('login')
-  
 })
 
 app.get('/signup', function (req, res) {
@@ -152,7 +166,7 @@ app.get('/signup', function (req, res) {
 app.post('/login', passport.authenticate('local'), function (req, res, next) {
       if (req.user) {
           res.render('home', {user: req.user})
-          
+
       } else {
           res.render('login', {error: err, info: info});
       }
@@ -211,14 +225,18 @@ app.post('/signup', function (req, res, next) {
     }
 })
 
-app.get('/auth/facebook',
-  passport.authenticate('facebook'));
+app.get('/auth/google',
+  passport.authenticate('google', { scope:
+      [ 'https://www.googleapis.com/auth/plus.login',
+      'https://www.googleapis.com/auth/plus.profile.emails.read',
+      'https://www.googleapis.com/auth/userinfo.profile' ] }
+));
 
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {failureRedirect: '/login'}),
+app.get('/auth/google/callback',
+  passport.authenticate('google', {failureRedirect: '/login'}),
   function(req, res) {
-    console.log(profile)
-    res.render('home', {user: req.displayName})
+    console.log('req.user: ', req.user)
+    res.render('home', {user: req.user})
 })
 
 const api = require('./routes/routes.js')

@@ -19,6 +19,9 @@ module.exports = {
       },
       last_name: {
         type: Sequelize.STRING
+      },
+      google_id: {
+        type: Sequelize.STRING
       }
     });
   },
