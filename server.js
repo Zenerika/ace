@@ -227,9 +227,8 @@ app.post('/signup', function (req, res, next) {
 
 app.get('/auth/google',
   passport.authenticate('google', { scope:
-      [ 'https://www.googleapis.com/auth/plus.login',
-      'https://www.googleapis.com/auth/plus.profile.emails.read',
-      'https://www.googleapis.com/auth/userinfo.profile' ] }
+      [ 'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/userinfo.email' ] }
 ));
 
 app.get('/auth/google/callback',
